@@ -1,0 +1,326 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    پروفایل کاربری | وبلاگ
+{% endblock %}
+
+{% block content %}
+<div class="row g-4">
+    <!-- ستون اطلاعات پروفایل -->
+    <div class="col-lg-4">
+        <div class="card profile-card fade-up" style="background: rgba(255,255,255,0.05); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.1); border-radius: 24px; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);">
+            <div class="card-body p-4 text-center">
+                <!-- عکس پروفایل -->
+                <div class="position-relative d-inline-block mb-3">
+                    <img src="{% static 'images/photo_۲۰۲۵-۰۶-۰۸_۱۴-۴۳-۳۵.jpg' %}" alt="عکس پروفایل"
+                         class="rounded-circle" width="150" height="150"
+                         style="object-fit: cover; border: 3px solid rgba(79, 70, 229, 0.3); box-shadow: 0 10px 30px rgba(79, 70, 229, 0.2);">
+
+                    {% if user == profile_user %}
+                        <div class="position-absolute bottom-0 end-0" style="transform: translate(5px, 5px);">
+                            <button class="btn btn-sm" style="background: linear-gradient(135deg, #4f46e5, #06b6d4); border: none; border-radius: 50%; width: 35px; height: 35px; color: white; box-shadow: 0 5px 15px rgba(79, 70, 229, 0.3); transition: 0.3s;">
+                                <i class="bi bi-camera"></i>
+                            </button>
+                        </div>
+                    {% endif %}
+                </div>
+
+                <!-- اطلاعات کاربر -->
+                <h4 class="fw-bold" style="color: white; font-size: 22px; margin-bottom: 5px;">
+                    نام و نام خانوادگی
+                </h4>
+                <p style="color: #9ca3af; font-size: 14px;">
+                    <i class="bi bi-at me-1"></i> نام کاربری
+                </p>
+
+                <div class="d-flex justify-content-center gap-3 mb-3">
+                    <span class="badge" style="background: rgba(79, 70, 229, 0.2); color: #818cf8; padding: 5px 14px; border-radius: 20px; font-weight: 400; font-size: 13px;">
+                        <i class="bi bi-envelope me-1"></i> ایمیل
+                    </span>
+                    <span class="badge" style="background: rgba(6, 182, 212, 0.2); color: #67e8f9; padding: 5px 14px; border-radius: 20px; font-weight: 400; font-size: 13px;">
+                        <i class="bi bi-calendar3 me-1"></i> عضو از 1405/4/14
+                    </span>
+                </div>
+
+                <!-- بیوگرافی -->
+                <div class="bio-box p-3 mb-3" style="background: rgba(255,255,255,0.03); border-radius: 12px; border: 1px solid rgba(255,255,255,0.06);">
+                    <p style="color: #d1d5db; font-size: 14px; line-height: 1.8; margin: 0;">
+                      این کاربر هنوز بیوگرافی‌ای اضافه نکرده است
+                    </p>
+                </div>
+
+                <!-- آمار -->
+                <div class="row g-2 mb-3">
+                    <div class="col-4">
+                        <div style="background: rgba(255,255,255,0.03); border-radius: 12px; padding: 10px;">
+                            <div style="color: #60a5fa; font-size: 20px; font-weight: 700;">تعداد مقالات</div>
+                            <div style="color: #6b7280; font-size: 12px;">مقالات</div>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div style="background: rgba(255,255,255,0.03); border-radius: 12px; padding: 10px;">
+                            <div style="color: #34d399; font-size: 20px; font-weight: 700;">تعداد نظرات</div>
+                            <div style="color: #6b7280; font-size: 12px;">نظرات</div>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div style="background: rgba(255,255,255,0.03); border-radius: 12px; padding: 10px;">
+                            <div style="color: #fbbf24; font-size: 20px; font-weight: 700;">مقالات منتشر شده</div>
+                            <div style="color: #6b7280; font-size: 12px;">منتشر شده</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- دکمه‌های عملیات -->
+
+                    <div class="d-grid gap-2">
+                        <a href="#"
+                           class="btn btn-gradient" style="border-radius: 12px; padding: 12px; font-weight: 500;">
+                            <i class="bi bi-pencil me-2"></i>
+                            ویرایش پروفایل
+                        </a>
+                        <a href="{% url 'article-create' %}"
+                           class="btn" style="border-radius: 12px; padding: 12px; font-weight: 500; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); color: #d1d5db; transition: 0.3s;">
+                            <i class="bi bi-plus-circle me-2"></i>
+                            نوشتن مقاله جدید
+                        </a>
+                    </div>
+
+                    <div class="d-grid">
+                        <button class="btn" style="border-radius: 12px; padding: 12px; font-weight: 500; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); color: #d1d5db; transition: 0.3s;">
+                            <i class="bi bi-envelope-paper me-2"></i>
+                            ارسال پیام
+                        </button>
+                    </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- ستون مقالات کاربر -->
+    <div class="col-lg-8">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="fw-bold" style="color: white; font-size: 24px; position: relative;">
+                <i class="bi bi-file-text text-primary me-2"></i>
+                مقالات کاربر
+                <span style="position: absolute; bottom: -5px; right: 0; width: 40px; height: 3px; background: linear-gradient(90deg, #4f46e5, #06b6d4); border-radius: 10px;"></span>
+            </h2>
+            <span class="badge" style="background: rgba(79, 70, 229, 0.2); color: #818cf8; padding: 5px 14px; border-radius: 20px; font-size: 14px;">
+                20 مقاله
+            </span>
+        </div>
+
+        <!-- لیست مقالات -->
+        <div class="articles-list">
+
+                <div class="article-item card mb-3 fade-up" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); border-radius: 16px; transition: 0.3s; animation-delay: {{ forloop.counter|add:-1|stringformat:"d" }}s;">
+                    <div class="card-body p-3">
+                        <div class="d-flex justify-content-between align-items-start gap-3">
+                            <div class="flex-grow-1">
+                                <a href="{% url 'article-detail'  %}"
+                                   class="text-decoration-none">
+                                    <h5 class="fw-semibold" style="color: #e5e7eb; transition: 0.3s; font-size: 17px;">
+                                      عنوان مقاله : کار با جنگو
+                                    </h5>
+                                </a>
+                                <div class="d-flex flex-wrap align-items-center gap-2 mt-1">
+                                    <span style="color: #6b7280; font-size: 13px;">
+                                        <i class="bi bi-calendar3 me-1"></i>
+                                        1405/4/14
+                                    </span>
+
+                                        <span class="badge" style="background: rgba(251, 191, 36, 0.2); color: #fbbf24; padding: 3px 12px; border-radius: 20px; font-weight: 400; font-size: 12px;">
+                                            <i class="bi bi-pencil-square me-1"></i> پیش‌نویس
+                                        </span>
+
+                                        <span class="badge" style="background: rgba(52, 211, 153, 0.2); color: #34d399; padding: 3px 12px; border-radius: 20px; font-weight: 400; font-size: 12px;">
+                                            <i class="bi bi-check-circle me-1"></i> منتشر شده
+                                        </span>
+
+                                    <span style="color: #6b7280; font-size: 12px;">
+                                        <i class="bi bi-eye me-1"></i> مقاله دیده شده
+                                    </span>
+                                    <span style="color: #6b7280; font-size: 12px;">
+                                        <i class="bi bi-chat me-1"></i> تعداد نظرات مقاله
+                                    </span>
+                                </div>
+
+                            </div>
+
+
+
+                                <div class="d-flex gap-1 flex-shrink-0">
+                                    <a href="#"
+                                       class="btn btn-sm" style="background: rgba(79, 70, 229, 0.15); color: #818cf8; border-radius: 8px; padding: 4px 12px; transition: 0.3s; border: none;">
+                                        <i class="bi bi-pencil"></i>
+                                    </a>
+                                    <a href="#"
+                                       class="btn btn-sm" style="background: rgba(239, 68, 68, 0.15); color: #f87171; border-radius: 8px; padding: 4px 12px; transition: 0.3s; border: none;">
+                                        <i class="bi bi-trash"></i>
+                                    </a>
+                                </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-center py-5" style="background: rgba(255,255,255,0.03); border-radius: 16px; border: 2px dashed rgba(255,255,255,0.06);">
+                    <i class="bi bi-file-text" style="font-size: 50px; color: #4f46e5; opacity: 0.5; display: block; margin-bottom: 15px;"></i>
+                    <p style="color: #9ca3af; font-size: 16px;">
+                        کاربر هنوز مقاله‌ای ننوشته است.
+                    </p>
+
+                        <a href="{% url 'article-create' %}" class="btn btn-gradient" style="border-radius: 30px; padding: 10px 30px; font-size: 14px;">
+                            <i class="bi bi-plus-circle me-2"></i>
+                            اولین مقاله خود را بنویسید
+                        </a>
+
+                </div>
+
+        </div>
+    </div>
+</div>
+
+<style>
+    /* استایل‌های اختصاصی برای صفحه پروفایل */
+    .profile-card {
+        animation: fadeUp 0.7s ease;
+        transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .profile-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 30px 60px -15px rgba(79, 70, 229, 0.2) !important;
+    }
+
+    /* استایل آیتم‌های مقالات */
+    .article-item:hover {
+        transform: translateX(-5px);
+        border-color: rgba(79, 70, 229, 0.3) !important;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+    }
+
+    .article-item .card-title a:hover {
+        color: #60a5fa !important;
+    }
+
+    /* استایل دکمه‌ها */
+    .btn-custom:hover {
+        background: rgba(255,255,255,0.1) !important;
+        border-color: rgba(255,255,255,0.2) !important;
+        color: white !important;
+    }
+
+    /* استایل دکمه آپلود عکس */
+    .btn-upload:hover {
+        transform: scale(1.1);
+        box-shadow: 0 5px 20px rgba(79, 70, 229, 0.4);
+    }
+
+    /* استایل باکس بیوگرافی */
+    .bio-box {
+        transition: 0.3s;
+    }
+
+    .bio-box:hover {
+        background: rgba(255,255,255,0.05) !important;
+    }
+
+    /* استایل ستون آمار */
+    .stat-box {
+        transition: 0.3s;
+    }
+
+    .stat-box:hover {
+        transform: translateY(-2px);
+        background: rgba(255,255,255,0.05) !important;
+    }
+
+    /* انیمیشن fade-up */
+    .fade-up {
+        animation: fadeUp 0.7s ease forwards;
+        opacity: 0;
+    }
+
+    @keyframes fadeUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* استایل برای موبایل */
+    @media (max-width: 768px) {
+        .profile-card {
+            margin: 0 0 20px 0;
+        }
+        .article-item .d-flex {
+            flex-direction: column;
+            align-items: stretch !important;
+        }
+        .article-item .flex-shrink-0 {
+            margin-top: 10px;
+        }
+        .profile-card .row .col-4 {
+            padding: 5px;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .profile-card .d-flex.gap-3 {
+            flex-direction: column;
+            align-items: center !important;
+        }
+        .profile-card .badge {
+            font-size: 12px !important;
+        }
+    }
+
+    /* استایل اسکرول برای لیست مقالات */
+    .articles-list {
+        max-height: 600px;
+        overflow-y: auto;
+        padding-right: 5px;
+    }
+
+    .articles-list::-webkit-scrollbar {
+        width: 4px;
+    }
+
+    .articles-list::-webkit-scrollbar-track {
+        background: rgba(255,255,255,0.03);
+        border-radius: 10px;
+    }
+
+    .articles-list::-webkit-scrollbar-thumb {
+        background: rgba(79, 70, 229, 0.3);
+        border-radius: 10px;
+    }
+
+    .articles-list::-webkit-scrollbar-thumb:hover {
+        background: rgba(79, 70, 229, 0.5);
+    }
+</style>
+
+<!-- جاوااسکریپت -->
+<script>
+    // انیمیشن تاخیر برای آیتم‌ها
+    document.querySelectorAll('.fade-up').forEach((el, index) => {
+        el.style.animationDelay = (index * 0.05) + 's';
+    });
+
+    // تایید حذف برای دکمه‌های حذف
+    document.querySelectorAll('.btn-danger-custom').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            if (!confirm('آیا از حذف این مقاله مطمئن هستید؟')) {
+                e.preventDefault();
+            }
+        });
+    });
+</script>
+{% endblock %}

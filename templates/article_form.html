@@ -1,0 +1,456 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    نوشتن مقاله جدید | وبلاگ
+{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <!-- کارت فرم با افکت شیشه‌ای -->
+        <div class="card create-card fade-up" style="background: rgba(255,255,255,0.05); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.1); border-radius: 24px; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);">
+
+            <!-- هدر -->
+            <div class="card-header border-0 pt-4 pb-0" style="background: transparent;">
+                <div class="d-flex align-items-center gap-3">
+                    <div class="avatar-circle" style="width: 50px; height: 50px; background: linear-gradient(135deg, #4f46e5, #06b6d4); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; box-shadow: 0 8px 25px rgba(79, 70, 229, 0.3);">
+                        <i class="bi bi-pencil-square text-white"></i>
+                    </div>
+                    <div>
+                        <h3 class="fw-bold" style="color: white; font-size: 24px; margin: 0;">
+
+                                نوشتن مقاله جدید
+
+                        </h3>
+                        <p class="text-secondary" style="font-size: 14px; margin: 0;">
+                            <i class="bi bi-info-circle me-1"></i>
+
+
+                                یک مقاله جذاب بنویسید
+
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- بدنه فرم -->
+            <div class="card-body p-4">
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+
+                    <!-- فیلد عنوان مقاله -->
+                    <div class="mb-4">
+                        <label for="title" class="form-label text-white-50" style="font-size: 14px; font-weight: 500;">
+                            <i class="bi bi-pencil me-1"></i> عنوان مقاله
+                            <span class="text-danger">*</span>
+                        </label>
+                        <div class="input-group">
+                            <span class="input-group-text" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-left: none; color: #60a5fa; border-radius: 12px 0 0 12px;">
+                                <i class="bi bi-pencil"></i>
+                            </span>
+                            <input type="text" class="form-control" id="title" name="title"
+                                   placeholder="یک عنوان جذاب و سئو پسند انتخاب کنید..."
+                                   style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: white; border-radius: 0 12px 12px 0; padding: 12px 15px; transition: 0.3s;"
+                                   required>
+                        </div>
+                        <div class="form-text text-secondary" style="font-size: 12px;">
+                            <i class="bi bi-lightbulb me-1"></i> عنوان باید بین ۱۰ تا ۷۰ کاراکتر باشد
+                        </div>
+                    </div>
+
+                    <!-- فیلد محتوای مقاله -->
+                    <div class="mb-4">
+                        <label for="content" class="form-label text-white-50" style="font-size: 14px; font-weight: 500;">
+                            <i class="bi bi-text-paragraph me-1"></i> محتوای اصلی
+                            <span class="text-danger">*</span>
+                        </label>
+                        <div class="position-relative">
+                            <div class="editor-toolbar mb-2 d-flex gap-1 flex-wrap" style="background: rgba(255,255,255,0.03); padding: 8px 12px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.06);">
+                                <button type="button" class="btn btn-sm" style="background: rgba(255,255,255,0.05); color: #d1d5db; border-radius: 6px; padding: 4px 10px; transition: 0.3s;">
+                                    <i class="bi bi-type-bold"></i>
+                                </button>
+                                <button type="button" class="btn btn-sm" style="background: rgba(255,255,255,0.05); color: #d1d5db; border-radius: 6px; padding: 4px 10px; transition: 0.3s;">
+                                    <i class="bi bi-type-italic"></i>
+                                </button>
+                                <button type="button" class="btn btn-sm" style="background: rgba(255,255,255,0.05); color: #d1d5db; border-radius: 6px; padding: 4px 10px; transition: 0.3s;">
+                                    <i class="bi bi-type-underline"></i>
+                                </button>
+                                <div class="vr bg-secondary" style="width: 1px; opacity: 0.2;"></div>
+                                <button type="button" class="btn btn-sm" style="background: rgba(255,255,255,0.05); color: #d1d5db; border-radius: 6px; padding: 4px 10px; transition: 0.3s;">
+                                    <i class="bi bi-list-ul"></i>
+                                </button>
+                                <button type="button" class="btn btn-sm" style="background: rgba(255,255,255,0.05); color: #d1d5db; border-radius: 6px; padding: 4px 10px; transition: 0.3s;">
+                                    <i class="bi bi-list-ol"></i>
+                                </button>
+                                <div class="vr bg-secondary" style="width: 1px; opacity: 0.2;"></div>
+                                <button type="button" class="btn btn-sm" style="background: rgba(255,255,255,0.05); color: #d1d5db; border-radius: 6px; padding: 4px 10px; transition: 0.3s;">
+                                    <i class="bi bi-link"></i>
+                                </button>
+                                <button type="button" class="btn btn-sm" style="background: rgba(255,255,255,0.05); color: #d1d5db; border-radius: 6px; padding: 4px 10px; transition: 0.3s;">
+                                    <i class="bi bi-image"></i>
+                                </button>
+                            </div>
+                            <textarea class="form-control" id="content" name="content" rows="12"
+                                      placeholder="محتوای مقاله خود را با دقت بنویسید..."
+                                      style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); color: #d1d5db; border-radius: 12px; padding: 15px; transition: 0.3s; resize: vertical; line-height: 1.8;"
+                                      required></textarea>
+                        </div>
+                        <div class="form-text text-secondary" style="font-size: 12px;">
+                            <i class="bi bi-info-circle me-1"></i> حداقل ۲۰۰ کاراکتر برای محتوای کامل
+                            <span class="float-end" id="charCount">۰ کاراکتر</span>
+                        </div>
+                    </div>
+
+                    <div class="row g-3">
+                        <!-- دسته‌بندی -->
+                        <div class="col-md-6">
+                            <label for="category" class="form-label text-white-50" style="font-size: 14px; font-weight: 500;">
+                                <i class="bi bi-folder me-1"></i> دسته‌بندی
+                                <span class="text-danger">*</span>
+                            </label>
+                            <select class="form-select" id="category" name="category"
+                                    style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: white; border-radius: 12px; padding: 12px 15px; transition: 0.3s;">
+                                <option value="" style="background: #1e293b;">یک دسته‌بندی را انتخاب کنید</option>
+                                <option value="programming" style="background: #1e293b;">برنامه نویسی</option>
+                                <option value="web-design" style="background: #1e293b;">طراحی سایت</option>
+                                <option value="django" style="background: #1e293b;">جنگو و بک‌اند</option>
+                                <option value="ai" style="background: #1e293b;">هوش مصنوعی</option>
+                            </select>
+                        </div>
+
+                        <!-- برچسب‌ها -->
+                        <div class="col-md-6">
+                            <label for="tags" class="form-label text-white-50" style="font-size: 14px; font-weight: 500;">
+                                <i class="bi bi-tags me-1"></i> برچسب‌ها
+                            </label>
+                            <div class="input-group">
+                                <span class="input-group-text" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-left: none; color: #60a5fa; border-radius: 12px 0 0 12px;">
+                                    <i class="bi bi-hash"></i>
+                                </span>
+                                <input type="text" class="form-control" id="tags" name="tags"
+                                       placeholder="پایتون، جنگو، وب"
+                                       style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: white; border-radius: 0 12px 12px 0; padding: 12px 15px; transition: 0.3s;">
+                            </div>
+                            <div class="form-text text-secondary" style="font-size: 12px;">
+                                <i class="bi bi-info-circle me-1"></i> برچسب‌ها را با کاما (،) جدا کنید
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- تصویر مقاله -->
+                    <div class="mb-4 mt-3">
+                        <label for="image" class="form-label text-white-50" style="font-size: 14px; font-weight: 500;">
+                            <i class="bi bi-image me-1"></i> تصویر مقاله
+                        </label>
+                        <div class="drop-zone p-4 text-center"
+                             style="background: rgba(255,255,255,0.03); border: 2px dashed rgba(255,255,255,0.1); border-radius: 16px; transition: 0.3s; cursor: pointer;">
+                            <input type="file" class="form-control" id="image" name="image"
+                                   style="display: none;">
+                            <i class="bi bi-cloud-upload" style="font-size: 40px; color: #4f46e5; display: block; margin-bottom: 10px;"></i>
+                            <p style="color: #9ca3af; font-size: 14px;">
+                                <span class="fw-semibold" style="color: #d1d5db;">برای آپلود کلیک کنید</span> یا تصویر را بکشید و رها کنید
+                            </p>
+                            <span style="color: #6b7280; font-size: 12px;">PNG، JPG، WEBP (حداکثر ۵MB)</span>
+                            <div id="imagePreview" class="mt-3" style="display: none;">
+                                <img src="#" alt="پیش‌نمایش" style="max-width: 200px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1);">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- وضعیت مقاله -->
+                    <div class="mb-4">
+                        <label class="form-label text-white-50" style="font-size: 14px; font-weight: 500;">
+                            <i class="bi bi-toggle-on me-1"></i> وضعیت
+                        </label>
+                        <div class="status-group p-3" style="background: rgba(255,255,255,0.03); border-radius: 12px; border: 1px solid rgba(255,255,255,0.06);">
+                            <div class="d-flex gap-4 flex-wrap">
+                                <div class="form-check">
+                                    <input type="radio" class="form-check-input" name="status" id="status_published" value="published" checked
+                                           style="border-color: rgba(255,255,255,0.2); background: rgba(255,255,255,0.05);">
+                                    <label for="status_published" class="form-check-label" style="color: #d1d5db;">
+                                        <i class="bi bi-globe2 text-success me-1"></i>
+                                        انتشار
+                                        <span class="text-secondary" style="font-size: 12px;">(قابل مشاهده برای همه)</span>
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input type="radio" class="form-check-input" name="status" id="status_draft" value="draft"
+                                           style="border-color: rgba(255,255,255,0.2); background: rgba(255,255,255,0.05);">
+                                    <label for="status_draft" class="form-check-label" style="color: #d1d5db;">
+                                        <i class="bi bi-pencil-square text-warning me-1"></i>
+                                        پیش‌نویس
+                                        <span class="text-secondary" style="font-size: 12px;">(فقط شما می‌توانید ببینید)</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr style="border-color: rgba(255,255,255,0.05);">
+
+                    <!-- دکمه‌های عملیات -->
+                    <div class="d-flex flex-wrap gap-3 justify-content-end mt-4">
+                        <a href="#" class="btn btn-cancel"
+                           style="border-radius: 12px; padding: 12px 30px; font-weight: 500; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); color: #9ca3af; transition: 0.3s;">
+                            <i class="bi bi-x-lg me-2"></i>
+                            انصراف
+                        </a>
+                        <button type="submit" class="btn btn-gradient"
+                                style="border-radius: 12px; padding: 12px 35px; font-weight: 600; position: relative; overflow: hidden;">
+                            <i class="bi bi-check2-circle me-2"></i>
+
+
+                                انتشار مقاله
+
+                            <span style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 0; height: 0; background: rgba(255,255,255,0.2); border-radius: 50%; transition: 0.5s;"></span>
+                        </button>
+
+                        <button type="button" class="btn btn-outline-secondary"
+                                style="border-radius: 12px; padding: 12px 25px; font-weight: 500; border: 1px solid rgba(255,255,255,0.08); color: #9ca3af; transition: 0.3s;">
+                            <i class="bi bi-eye me-2"></i>
+                            پیش‌نمایش
+                        </button>
+                        
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* استایل‌های اختصاصی برای صفحه نوشتن مقاله */
+    .create-card {
+        animation: fadeUp 0.7s ease;
+        transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .create-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 30px 60px -15px rgba(79, 70, 229, 0.2) !important;
+    }
+
+    /* استایل فیلدهای ورودی */
+    .form-control:focus, .form-select:focus {
+        background: rgba(255,255,255,0.08) !important;
+        border-color: #4f46e5 !important;
+        box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15) !important;
+    }
+
+    .input-group:focus-within .input-group-text {
+        border-color: #4f46e5 !important;
+        box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15) !important;
+    }
+
+    /* استایل چک‌باکس‌ها */
+    .form-check-input:checked {
+        background-color: #4f46e5 !important;
+        border-color: #4f46e5 !important;
+    }
+
+    .form-check-input:focus {
+        box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.25) !important;
+        border-color: #4f46e5 !important;
+    }
+
+    /* استایل دکمه انصراف */
+    .btn-cancel:hover {
+        background: rgba(255,255,255,0.1) !important;
+        border-color: rgba(255,255,255,0.2) !important;
+        color: white !important;
+        transform: translateY(-2px);
+    }
+
+    /* استایل دکمه انتشار */
+    .btn-gradient:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px rgba(79, 70, 229, 0.3);
+    }
+
+    .btn-gradient:hover span {
+        width: 300px;
+        height: 300px;
+    }
+
+    .btn-gradient:active {
+        transform: scale(0.95);
+    }
+
+    /* استایل دکمه‌های ویرایشگر */
+    .editor-toolbar .btn:hover {
+        background: rgba(255,255,255,0.1) !important;
+        color: white !important;
+    }
+
+    /* استایل drop zone */
+    .drop-zone:hover {
+        border-color: #4f46e5 !important;
+        background: rgba(79, 70, 229, 0.05) !important;
+    }
+
+    .drop-zone.dragover {
+        border-color: #4f46e5 !important;
+        background: rgba(79, 70, 229, 0.08) !important;
+    }
+
+    /* انیمیشن fade-up */
+    .fade-up {
+        animation: fadeUp 0.7s ease forwards;
+        opacity: 0;
+    }
+
+    @keyframes fadeUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* استایل برای موبایل */
+    @media (max-width: 768px) {
+        .create-card {
+            margin: 0 10px;
+        }
+        .status-group .d-flex {
+            flex-direction: column;
+            gap: 10px !important;
+        }
+        .editor-toolbar .btn {
+            padding: 4px 8px !important;
+            font-size: 12px;
+        }
+    }
+
+    /* استایل برای انتخاب‌ها */
+    .form-select option {
+        background-color: #1e293b;
+        color: white;
+    }
+
+    /* استایل برای متن‌های کمک */
+    .form-text {
+        transition: 0.3s;
+    }
+
+    /* بهبود استایل فایل */
+    input[type="file"]::file-selector-button {
+        background: rgba(255,255,255,0.05);
+        border: 1px solid rgba(255,255,255,0.1);
+        color: #d1d5db;
+        padding: 8px 16px;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    input[type="file"]::file-selector-button:hover {
+        background: rgba(255,255,255,0.1);
+    }
+</style>
+
+<!-- جاوااسکریپت برای امکانات فرم -->
+<script>
+    // شمارش کاراکترهای محتوا
+    const contentTextarea = document.getElementById('content');
+    const charCount = document.getElementById('charCount');
+
+    if (contentTextarea) {
+        contentTextarea.addEventListener('input', function() {
+            const count = this.value.length;
+            charCount.textContent = count.toLocaleString() + ' کاراکتر';
+        });
+    }
+
+    // پیش‌نمایش تصویر
+    const imageInput = document.getElementById('image');
+    const imagePreview = document.getElementById('imagePreview');
+    const previewImg = imagePreview.querySelector('img');
+
+    if (imageInput) {
+        imageInput.addEventListener('change', function(e) {
+            const file = this.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    previewImg.src = e.target.result;
+                    imagePreview.style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+    }
+
+    // Drag and Drop برای آپلود تصویر
+    const dropZone = document.querySelector('.drop-zone');
+
+    if (dropZone) {
+        dropZone.addEventListener('click', function() {
+            imageInput.click();
+        });
+
+        dropZone.addEventListener('dragover', function(e) {
+            e.preventDefault();
+            this.classList.add('dragover');
+        });
+
+        dropZone.addEventListener('dragleave', function(e) {
+            e.preventDefault();
+            this.classList.remove('dragover');
+        });
+
+        dropZone.addEventListener('drop', function(e) {
+            e.preventDefault();
+            this.classList.remove('dragover');
+
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                imageInput.files = files;
+                const event = new Event('change');
+                imageInput.dispatchEvent(event);
+            }
+        });
+    }
+
+    // انیمیشن ripple برای دکمه
+    document.querySelector('.btn-gradient')?.addEventListener('click', function(e) {
+        const ripple = document.createElement('span');
+        const rect = this.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+
+        ripple.style.cssText = `
+            position: absolute;
+            top: ${y}px;
+            left: ${x}px;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.3);
+            transform: translate(-50%, -50%);
+            animation: rippleEffect 0.6s ease-out forwards;
+            pointer-events: none;
+        `;
+
+        this.appendChild(ripple);
+        setTimeout(() => ripple.remove(), 600);
+    });
+
+    // استایل برای انیمیشن ripple
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes rippleEffect {
+            to {
+                width: 300px;
+                height: 300px;
+                opacity: 0;
+            }
+        }
+    `;
+    document.head.appendChild(style);
+</script>
+{% endblock %}

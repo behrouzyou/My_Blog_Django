@@ -1,0 +1,347 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load static %}
+
+{% block title %}
+    {% trans 'ثبت نام' %} | وبلاگ
+{% endblock %}
+
+{% block content %}
+    <div class="row justify-content-center align-items-center min-vh-75">
+        <div class="col-md-6 col-lg-5">
+            <!-- کارت ثبت‌نام با افکت شیشه‌ای -->
+            <div class="card signup-card fade-up" style="background: rgba(255,255,255,0.05); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.1); border-radius: 24px; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);">
+
+                <!-- هدر با آواتار -->
+                <div class="card-header text-center border-0 pt-4 pb-0" style="background: transparent;">
+                    <div class="avatar-circle mx-auto mb-3" style="width: 80px; height: 80px; background: linear-gradient(135deg, #4f46e5, #06b6d4); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 35px; box-shadow: 0 10px 30px rgba(79, 70, 229, 0.3);">
+                        <i class="bi bi-person-plus-fill text-white"></i>
+                    </div>
+                    <h3 class="fw-bold" style="color: white; font-size: 28px;">{% trans 'ایجاد حساب کاربری' %}</h3>
+                    <p class="text-secondary" style="font-size: 14px;">
+                        <i class="bi bi-info-circle me-1"></i>
+                        {% trans 'برای عضویت اطلاعات خود را وارد کنید' %}
+                    </p>
+                </div>
+
+                <!-- بدنه فرم -->
+                <div class="card-body p-4 pt-3">
+                    <form class="signup" id="signup_form" method="post" action="#">
+                        {% csrf_token %}
+
+                        <!-- فیلد نام کاربری -->
+                        <div class="mb-3">
+                            <label for="username" class="form-label text-white-50" style="font-size: 14px; font-weight: 500;">
+                                <i class="bi bi-person me-1"></i> {% trans 'نام کاربری' %}
+                            </label>
+                            <div class="input-group">
+                                <span class="input-group-text" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-left: none; color: #60a5fa; border-radius: 12px 0 0 12px;">
+                                    <i class="bi bi-person"></i>
+                                </span>
+                                <input type="text" class="form-control" id="username" name="username" required
+                                       style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: white; border-radius: 0 12px 12px 0; padding: 12px 15px; transition: 0.3s;"
+                                       placeholder="{% trans 'نام کاربری خود را وارد کنید' %}">
+                            </div>
+                            <div class="form-text text-secondary" style="font-size: 12px;">
+                                <i class="bi bi-info-circle"></i> {% trans 'حداقل ۳ کاراکتر' %}
+                            </div>
+                        </div>
+
+                        <!-- فیلد ایمیل -->
+                        <div class="mb-3">
+                            <label for="email" class="form-label text-white-50" style="font-size: 14px; font-weight: 500;">
+                                <i class="bi bi-envelope me-1"></i> {% trans 'ایمیل' %}
+                            </label>
+                            <div class="input-group">
+                                <span class="input-group-text" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-left: none; color: #60a5fa; border-radius: 12px 0 0 12px;">
+                                    <i class="bi bi-envelope"></i>
+                                </span>
+                                <input type="email" class="form-control" id="email" name="email" required
+                                       style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: white; border-radius: 0 12px 12px 0; padding: 12px 15px; transition: 0.3s;"
+                                       placeholder="{% trans 'ایمیل خود را وارد کنید' %}">
+                            </div>
+                            <div class="form-text text-secondary" style="font-size: 12px;">
+                                <i class="bi bi-shield-check"></i> {% trans 'ایمیل شما محفوظ است' %}
+                            </div>
+                        </div>
+
+                        <!-- فیلد رمز عبور -->
+                        <div class="mb-3">
+                            <label for="password" class="form-label text-white-50" style="font-size: 14px; font-weight: 500;">
+                                <i class="bi bi-lock me-1"></i> {% trans 'رمز عبور' %}
+                            </label>
+                            <div class="input-group">
+                                <span class="input-group-text" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-left: none; color: #60a5fa; border-radius: 12px 0 0 12px;">
+                                    <i class="bi bi-lock"></i>
+                                </span>
+                                <input type="password" class="form-control" id="password" name="password" required
+                                       style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: white; border-radius: 0 12px 12px 0; padding: 12px 15px; transition: 0.3s;"
+                                       placeholder="{% trans 'رمز عبور خود را وارد کنید' %}">
+                                <button type="button" class="btn" onclick="togglePassword('password', 'eyeIcon1')"
+                                        style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-right: none; color: #60a5fa; border-radius: 12px 0 0 12px;">
+                                    <i class="bi bi-eye" id="eyeIcon1"></i>
+                                </button>
+                            </div>
+                            <div class="form-text text-secondary" style="font-size: 12px;">
+                                <i class="bi bi-shield-lock"></i> {% trans 'حداقل ۸ کاراکتر با حروف و اعداد' %}
+                            </div>
+                        </div>
+
+                        <!-- فیلد تکرار رمز عبور -->
+                        <div class="mb-3">
+                            <label for="password2" class="form-label text-white-50" style="font-size: 14px; font-weight: 500;">
+                                <i class="bi bi-lock-fill me-1"></i> {% trans 'تکرار رمز عبور' %}
+                            </label>
+                            <div class="input-group">
+                                <span class="input-group-text" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-left: none; color: #60a5fa; border-radius: 12px 0 0 12px;">
+                                    <i class="bi bi-lock-fill"></i>
+                                </span>
+                                <input type="password" class="form-control" id="password2" name="password2" required
+                                       style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: white; border-radius: 0 12px 12px 0; padding: 12px 15px; transition: 0.3s;"
+                                       placeholder="{% trans 'رمز عبور را دوباره وارد کنید' %}">
+                                <button type="button" class="btn" onclick="togglePassword('password2', 'eyeIcon2')"
+                                        style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-right: none; color: #60a5fa; border-radius: 12px 0 0 12px;">
+                                    <i class="bi bi-eye" id="eyeIcon2"></i>
+                                </button>
+                            </div>
+                            <div class="form-text text-secondary" style="font-size: 12px;">
+                                <i class="bi bi-check-circle"></i> {% trans 'رمز عبور را تکرار کنید' %}
+                            </div>
+                        </div>
+
+                        <!-- نمایش خطاهای فرم -->
+                        {% if form.errors %}
+                            <div class="alert alert-danger" style="background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.2); border-radius: 12px; color: #f87171; padding: 10px 15px; font-size: 14px;">
+                                <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                                {% trans 'لطفاً خطاهای زیر را برطرف کنید:' %}
+                                <ul class="mb-0 mt-1" style="padding-right: 20px;">
+                                    {% for field in form %}
+                                        {% for error in field.errors %}
+                                            <li>{{ error }}</li>
+                                        {% endfor %}
+                                    {% endfor %}
+                                    {% for error in form.non_field_errors %}
+                                        <li>{{ error }}</li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        {% endif %}
+
+                        <!-- دکمه ثبت‌نام -->
+                        <div class="d-grid mt-4">
+                            <button type="submit" class="btn btn-gradient btn-lg"
+                                    style="border-radius: 12px; padding: 14px; font-weight: 600; letter-spacing: 0.5px; position: relative; overflow: hidden;">
+                                <i class="bi bi-person-plus me-2"></i>
+                                {% trans 'ثبت نام' %}
+                                <span style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 0; height: 0; background: rgba(255,255,255,0.2); border-radius: 50%; transition: 0.5s;"></span>
+                            </button>
+                        </div>
+
+                        <!-- نمایش فرم به صورت مخفی (برای سازگاری) -->
+                        <div style="display: none;">
+                            {{ form.as_p }}
+                        </div>
+                    </form>
+                </div>
+
+                <!-- فوتر با لینک‌ها -->
+                <div class="card-footer text-center border-0 pt-0 pb-4" style="background: transparent;">
+                    <div style="position: relative; margin-bottom: 15px;">
+                        <hr style="border-color: rgba(255,255,255,0.05);">
+                        <span style="position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: #0f172a; padding: 0 15px; color: #6b7280; font-size: 13px;">
+                            {% trans 'یا' %}
+                        </span>
+                    </div>
+
+                    <p class="text-secondary" style="font-size: 14px;">
+                       قبلاً ثبت نام کردید؟
+                        <a href="{% url 'login' %}" class="text-decoration-none fw-semibold"
+                           style="color: #60a5fa; transition: 0.3s; background: linear-gradient(135deg, #4f46e5, #06b6d4); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
+                           وارد شوید
+                            <i class="bi bi-arrow-left me-1"></i>
+                        </a>
+                    </p>
+
+                    <!-- دکمه‌های اجتماعی -->
+                    <div class="mt-3 d-flex justify-content-center gap-2">
+                        <button class="btn btn-social" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); border-radius: 50%; width: 40px; height: 40px; color: white; transition: 0.3s;">
+                            <i class="bi bi-google"></i>
+                        </button>
+                        <button class="btn btn-social" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); border-radius: 50%; width: 40px; height: 40px; color: white; transition: 0.3s;">
+                            <i class="bi bi-github"></i>
+                        </button>
+                        <button class="btn btn-social" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); border-radius: 50%; width: 40px; height: 40px; color: white; transition: 0.3s;">
+                            <i class="bi bi-linkedin"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- متن قوانین -->
+            <div class="text-center mt-4 fade-up" style="animation-delay: 0.3s;">
+                <p class="text-secondary" style="font-size: 13px;">
+                    <i class="bi bi-shield-check text-success me-1"></i>
+                    {% trans 'با ثبت نام، قوانین و حریم خصوصی را می‌پذیرید' %}
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        /* استایل‌های اختصاصی برای صفحه ثبت‌نام */
+        .signup-card {
+            animation: fadeUp 0.7s ease;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .signup-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 30px 60px -15px rgba(79, 70, 229, 0.3) !important;
+        }
+
+        /* استایل فیلدهای ورودی */
+        .form-control:focus {
+            background: rgba(255,255,255,0.08) !important;
+            border-color: #4f46e5 !important;
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15) !important;
+        }
+
+        .input-group:focus-within .input-group-text {
+            border-color: #4f46e5 !important;
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15) !important;
+        }
+
+        /* دکمه‌های اجتماعی */
+        .btn-social:hover {
+            transform: translateY(-3px);
+            background: rgba(255,255,255,0.1) !important;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        /* انیمیشن برای دکمه ثبت‌نام */
+        .btn-gradient:hover span {
+            width: 300px;
+            height: 300px;
+        }
+
+        /* استایل برای خطاها */
+        .alert-danger ul {
+            list-style-type: none;
+            padding-right: 0;
+        }
+
+        .alert-danger ul li::before {
+            content: "• ";
+            color: #f87171;
+        }
+
+        /* مدیا کوئری برای موبایل */
+        @media (max-width: 768px) {
+            .signup-card {
+                margin: 0 10px;
+            }
+            .avatar-circle {
+                width: 60px !important;
+                height: 60px !important;
+                font-size: 25px !important;
+            }
+        }
+
+        .min-vh-75 {
+            min-height: 75vh;
+        }
+
+        /* انیمیشن fade-up */
+        .fade-up {
+            animation: fadeUp 0.7s ease forwards;
+            opacity: 0;
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* استایل خاص برای فیلد مخفی فرم */
+        .signup .hidden-field {
+            display: none !important;
+        }
+    </style>
+
+    <!-- جاوااسکریپت برای نمایش/مخفی کردن رمز -->
+    <script>
+        function togglePassword(inputId, iconId) {
+            const passwordInput = document.getElementById(inputId);
+            const eyeIcon = document.getElementById(iconId);
+
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                eyeIcon.className = 'bi bi-eye-slash';
+            } else {
+                passwordInput.type = 'password';
+                eyeIcon.className = 'bi bi-eye';
+            }
+        }
+
+        // انیمیشن ripple برای دکمه
+        document.querySelector('.btn-gradient').addEventListener('click', function(e) {
+            const ripple = document.createElement('span');
+            const rect = this.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            ripple.style.cssText = `
+                position: absolute;
+                top: ${y}px;
+                left: ${x}px;
+                width: 0;
+                height: 0;
+                border-radius: 50%;
+                background: rgba(255,255,255,0.4);
+                transform: translate(-50%, -50%);
+                animation: rippleEffect 0.6s ease-out forwards;
+                pointer-events: none;
+            `;
+
+            this.appendChild(ripple);
+            setTimeout(() => ripple.remove(), 600);
+        });
+
+        // استایل برای انیمیشن ripple
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes rippleEffect {
+                to {
+                    width: 300px;
+                    height: 300px;
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // اعتبارسنجی ساده سمت کاربر
+        document.getElementById('signup_form').addEventListener('submit', function(e) {
+            const password = document.getElementById('password').value;
+            const password2 = document.getElementById('password2').value;
+
+            if (password !== password2) {
+                e.preventDefault();
+                alert('{% trans "رمز عبور و تکرار آن مطابقت ندارند!" %}');
+                return false;
+            }
+
+            if (password.length < 8) {
+                e.preventDefault();
+                alert('{% trans "رمز عبور باید حداقل ۸ کاراکتر باشد!" %}');
+                return false;
+            }
+        });
+    </script>
+{% endblock %}

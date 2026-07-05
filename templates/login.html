@@ -1,0 +1,255 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load static %}
+
+{% block title %}
+    ورود | وبلاگ
+{% endblock %}
+
+{% block content %}
+    <div class="row justify-content-center align-items-center min-vh-75">
+        <div class="col-md-6 col-lg-5">
+            <!-- Card با انیمیشن و افکت شیشه‌ای -->
+            <div class="card login-card fade-up" style="background: rgba(255,255,255,0.05); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.1); border-radius: 24px; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);">
+
+                <!-- هدر با آیکون و عنوان -->
+                <div class="card-header text-center border-0 pt-4 pb-0" style="background: transparent;">
+                    <div class="avatar-circle mx-auto mb-3" style="width: 80px; height: 80px; background: linear-gradient(135deg, #4f46e5, #06b6d4); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 35px; box-shadow: 0 10px 30px rgba(79, 70, 229, 0.3);">
+                        <i class="bi bi-person-fill text-white"></i>
+                    </div>
+                    <h3 class="fw-bold" style="color: white; font-size: 28px;">خوش آمدید</h3>
+                    <p class="text-secondary" style="font-size: 14px;">برای ورود اطلاعات خود را وارد کنید</p>
+                </div>
+
+                <!-- بدنه فرم -->
+                <div class="card-body p-4 pt-3">
+                    <form class="login" method="POST" action="">
+                        {% csrf_token %}
+
+                        <!-- فیلد نام کاربری با آیکون -->
+                        <div class="mb-4">
+                            <label for="username" class="form-label text-white-50" style="font-size: 14px; font-weight: 500;">
+                                <i class="bi bi-person me-1"></i> نام کاربری
+                            </label>
+                            <div class="input-group">
+                                <span class="input-group-text" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-left: none; color: #60a5fa; border-radius: 12px 0 0 12px;">
+                                    <i class="bi bi-person"></i>
+                                </span>
+                                <input type="text" class="form-control" id="username" required
+                                       style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: white; border-radius: 0 12px 12px 0; padding: 12px 15px; transition: 0.3s;"
+                                       placeholder="نام کاربری خود را وارد کنید">
+                            </div>
+                            <div class="form-text text-secondary" style="font-size: 12px;">
+                                <i class="bi bi-info-circle"></i> نام کاربری خود را وارد کنید
+                            </div>
+                        </div>
+
+                        <!-- فیلد رمز عبور با آیکون -->
+                        <div class="mb-4">
+                            <label for="password" class="form-label text-white-50" style="font-size: 14px; font-weight: 500;">
+                                <i class="bi bi-lock me-1"></i> رمز عبور
+                            </label>
+                            <div class="input-group">
+                                <span class="input-group-text" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-left: none; color: #60a5fa; border-radius: 12px 0 0 12px;">
+                                    <i class="bi bi-lock"></i>
+                                </span>
+                                <input type="password" class="form-control" id="password" required
+                                       style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: white; border-radius: 0 12px 12px 0; padding: 12px 15px; transition: 0.3s;"
+                                       placeholder="رمز عبور خود را وارد کنید">
+                                <button type="button" class="btn" onclick="togglePassword()"
+                                        style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-left: none; color: #60a5fa; border-radius: 0 12px 12px 0;">
+                                    <i class="bi bi-eye" id="eyeIcon"></i>
+                                </button>
+                            </div>
+                            <div class="form-text text-secondary" style="font-size: 12px;">
+                                <i class="bi bi-shield-lock"></i> رمز عبور شما امن است
+                            </div>
+                        </div>
+
+                        <!-- گزینه‌های یادآوری -->
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="remember"
+                                       style="border-color: rgba(255,255,255,0.2); background: rgba(255,255,255,0.05);">
+                                <label class="form-check-label text-white-50" for="remember" style="font-size: 14px;">
+                                    مرا به خاطر بسپار
+                                </label>
+                            </div>
+                            <a href="#" class="text-decoration-none" style="color: #60a5fa; font-size: 14px; transition: 0.3s;">
+                                <i class="bi bi-question-circle"></i> رمز را فراموش کردید؟
+                            </a>
+                        </div>
+
+                        <!-- دکمه ورود با انیمیشن -->
+                        <div class="d-grid mt-3">
+                            <button type="submit" class="btn btn-gradient btn-lg"
+                                    style="border-radius: 12px; padding: 14px; font-weight: 600; letter-spacing: 0.5px; position: relative; overflow: hidden;">
+                                <i class="bi bi-box-arrow-in-right me-2"></i>
+                                ورود به حساب کاربری
+                                <span style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 0; height: 0; background: rgba(255,255,255,0.2); border-radius: 50%; transition: 0.5s;"></span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- فوتر با لینک‌ها -->
+                <div class="card-footer text-center border-0 pt-0 pb-4" style="background: transparent;">
+                    <div style="position: relative; margin-bottom: 15px;">
+                        <hr style="border-color: rgba(255,255,255,0.05);">
+                        <span style="position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: #0f172a; padding: 0 15px; color: #6b7280; font-size: 13px;">
+                            یا
+                        </span>
+                    </div>
+
+                    <p class="text-secondary" style="font-size: 14px;">
+                        حساب کاربری ندارید؟
+                        <a href="{% url 'signup' %}" class="text-decoration-none fw-semibold"
+                           style="color: #60a5fa; transition: 0.3s; background: linear-gradient(135deg, #4f46e5, #06b6d4); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
+                            ثبت نام کنید
+                            <i class="bi bi-arrow-left me-1"></i>
+                        </a>
+                    </p>
+
+                    <!-- دکمه‌های اجتماعی -->
+                    <div class="mt-3 d-flex justify-content-center gap-2">
+                        <button class="btn" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); border-radius: 50%; width: 40px; height: 40px; color: white; transition: 0.3s;">
+                            <i class="bi bi-google"></i>
+                        </button>
+                        <button class="btn" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); border-radius: 50%; width: 40px; height: 40px; color: white; transition: 0.3s;">
+                            <i class="bi bi-github"></i>
+                        </button>
+                        <button class="btn" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); border-radius: 50%; width: 40px; height: 40px; color: white; transition: 0.3s;">
+                            <i class="bi bi-linkedin"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- متن پایین صفحه با انیمیشن -->
+            <div class="text-center mt-4 fade-up" style="animation-delay: 0.3s;">
+                <p class="text-secondary" style="font-size: 13px;">
+                    <i class="bi bi-shield-check text-success me-1"></i>
+                    امنیت اطلاعات شما برای ما مهم است
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        /* استایل‌های اختصاصی برای صفحه ورود */
+        .login-card {
+            animation: fadeUp 0.7s ease;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .login-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 30px 60px -15px rgba(79, 70, 229, 0.3) !important;
+        }
+
+        /* استایل فیلدهای ورودی */
+        .form-control:focus {
+            background: rgba(255,255,255,0.08) !important;
+            border-color: #4f46e5 !important;
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15) !important;
+        }
+
+        .input-group:focus-within .input-group-text {
+            border-color: #4f46e5 !important;
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15) !important;
+        }
+
+        /* استایل چک‌باکس */
+        .form-check-input:checked {
+            background-color: #4f46e5 !important;
+            border-color: #4f46e5 !important;
+        }
+
+        .form-check-input:focus {
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.25) !important;
+            border-color: #4f46e5 !important;
+        }
+
+        /* دکمه‌های اجتماعی */
+        .btn-social:hover {
+            transform: translateY(-3px);
+            background: rgba(255,255,255,0.1) !important;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        /* انیمیشن برای دکمه ورود */
+        .btn-gradient:hover span {
+            width: 300px;
+            height: 300px;
+        }
+
+        /* مدیا کوئری برای موبایل */
+        @media (max-width: 768px) {
+            .login-card {
+                margin: 0 10px;
+            }
+            .avatar-circle {
+                width: 60px !important;
+                height: 60px !important;
+                font-size: 25px !important;
+            }
+        }
+
+        .min-vh-75 {
+            min-height: 75vh;
+        }
+    </style>
+
+    <!-- جاوااسکریپت برای نمایش/مخفی کردن رمز -->
+    <script>
+        function togglePassword() {
+            const passwordInput = document.getElementById('password');
+            const eyeIcon = document.getElementById('eyeIcon');
+
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                eyeIcon.className = 'bi bi-eye-slash';
+            } else {
+                passwordInput.type = 'password';
+                eyeIcon.className = 'bi bi-eye';
+            }
+        }
+
+        // انیمیشن ripple برای دکمه
+        document.querySelector('.btn-gradient').addEventListener('click', function(e) {
+            const ripple = document.createElement('span');
+            const rect = this.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            ripple.style.cssText = `
+                position: absolute;
+                top: ${y}px;
+                left: ${x}px;
+                width: 0;
+                height: 0;
+                border-radius: 50%;
+                background: rgba(255,255,255,0.4);
+                transform: translate(-50%, -50%);
+                animation: rippleEffect 0.6s ease-out forwards;
+                pointer-events: none;
+            `;
+
+            this.appendChild(ripple);
+            setTimeout(() => ripple.remove(), 600);
+        });
+
+        // استایل برای انیمیشن ripple
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes rippleEffect {
+                to {
+                    width: 300px;
+                    height: 300px;
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+{% endblock %}

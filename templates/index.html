@@ -1,0 +1,379 @@
+﻿{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}صفحه اصلی | وبلاگ{% endblock %}
+
+{% block content %}
+<div class="row g-4">
+    <!-- بخش اصلی مقالات -->
+    <div class="col-lg-8">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="fw-bold" style="color: white; font-size: 28px; position: relative;">
+                <i class="bi bi-newspaper text-primary me-2"></i>
+                آخرین مقالات
+                <span style="position: absolute; bottom: -5px; right: 0; width: 50px; height: 3px; background: linear-gradient(90deg, #4f46e5, #06b6d4); border-radius: 10px;"></span>
+            </h2>
+            <a href="#" class="text-decoration-none" style="color: #60a5fa; font-size: 14px; transition: 0.3s;">
+                مشاهده همه <i class="bi bi-arrow-left"></i>
+            </a>
+        </div>
+
+        <!-- مقاله اول با طراحی مدرن -->
+        <div class="card mb-4 blog-card fade-up" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); border-radius: 20px; overflow: hidden; transition: 0.4s; backdrop-filter: blur(10px);">
+            <div class="position-relative">
+                <img src="#" class="card-img-top" height="350" alt="تصویر مقاله" style="object-fit: cover; background: linear-gradient(135deg, #1e293b, #334155);" />
+                <div class="position-absolute top-0 end-0 m-3">
+                    <span class="badge" style="background: linear-gradient(135deg, #4f46e5, #06b6d4); padding: 8px 16px; border-radius: 30px; font-weight: 500; backdrop-filter: blur(10px);">
+                        <i class="bi bi-clock me-1"></i> ۵ دقیقه
+                    </span>
+                </div>
+                <div class="position-absolute bottom-0 start-0 m-3">
+                    <span class="badge bg-dark bg-opacity-75 px-3 py-2 rounded-pill" style="backdrop-filter: blur(10px);">
+                        <i class="bi bi-tag me-1"></i> برنامه نویسی
+                    </span>
+                </div>
+            </div>
+
+            <div class="card-body p-4">
+                <div class="d-flex align-items-center mb-3">
+                    <div class="avatar-sm me-2" style="width: 40px; height: 40px; background: linear-gradient(135deg, #4f46e5, #06b6d4); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 600; color: white; font-size: 16px;">
+                        A
+                    </div>
+                    <div>
+                        <a href="#" class="text-decoration-none fw-semibold" style="color: #e5e7eb; font-size: 14px;">ادمین</a>
+                        <span style="color: #6b7280; font-size: 13px; margin-right: 10px;">
+                            <i class="bi bi-calendar3 me-1"></i> ۱۴ تیر ۱۴۰۵
+                        </span>
+                    </div>
+                </div>
+
+                <h3 class="card-title fw-bold" style="color: white; font-size: 24px; transition: 0.3s;">
+                    <a href="#" class="text-decoration-none" style="color: white; transition: 0.3s;">
+                        شروع کار با جنگو: راهنمای کامل برای مبتدیان
+                    </a>
+                </h3>
+
+                <div class="d-flex gap-2 mb-3 flex-wrap">
+                    <span class="badge" style="background: rgba(79, 70, 229, 0.2); color: #818cf8; border: 1px solid rgba(79, 70, 229, 0.2); padding: 5px 12px; border-radius: 20px; font-weight: 400;">
+                        <i class="bi bi-tag"></i> پایتون
+                    </span>
+                    <span class="badge" style="background: rgba(6, 182, 212, 0.2); color: #67e8f9; border: 1px solid rgba(6, 182, 212, 0.2); padding: 5px 12px; border-radius: 20px; font-weight: 400;">
+                        <i class="bi bi-tag"></i> جنگو
+                    </span>
+                    <span class="badge" style="background: rgba(251, 191, 36, 0.2); color: #fbbf24; border: 1px solid rgba(251, 191, 36, 0.2); padding: 5px 12px; border-radius: 20px; font-weight: 400;">
+                        <i class="bi bi-star"></i> محبوب
+                    </span>
+                </div>
+
+                <p class="card-text" style="color: #9ca3af; line-height: 1.8; font-size: 15px;">
+                    لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است، و برای شرایط فعلی تکنولوژی مورد نیاز، و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد...
+                </p>
+
+                <div class="d-flex justify-content-between align-items-center mt-3">
+                    <a href="{% url 'article-detail'  %}" class="btn btn-gradient" style="border-radius: 30px; padding: 10px 25px; font-size: 14px;">
+                        <i class="bi bi-arrow-left me-2"></i>
+                        ادامه مطلب
+                    </a>
+                    <div class="d-flex gap-3 text-secondary" style="font-size: 14px;">
+                        <span><i class="bi bi-eye me-1"></i> ۱٫۲K</span>
+                        <span><i class="bi bi-chat me-1"></i> ۴۵</span>
+                        <span><i class="bi bi-heart me-1"></i> ۱۲۳</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- مقاله دوم -->
+        <div class="card mb-4 blog-card fade-up" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); border-radius: 20px; overflow: hidden; transition: 0.4s; backdrop-filter: blur(10px); animation-delay: 0.1s;">
+            <div class="position-relative">
+                <img src="#" class="card-img-top" height="350" alt="تصویر مقاله" style="object-fit: cover; background: linear-gradient(135deg, #1e293b, #334155);" />
+                <div class="position-absolute top-0 end-0 m-3">
+                    <span class="badge" style="background: linear-gradient(135deg, #4f46e5, #06b6d4); padding: 8px 16px; border-radius: 30px; font-weight: 500; backdrop-filter: blur(10px);">
+                        <i class="bi bi-clock me-1"></i> ۳ دقیقه
+                    </span>
+                </div>
+            </div>
+
+            <div class="card-body p-4">
+                <div class="d-flex align-items-center mb-3">
+                    <div class="avatar-sm me-2" style="width: 40px; height: 40px; background: linear-gradient(135deg, #f59e0b, #f97316); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 600; color: white; font-size: 16px;">
+                        M
+                    </div>
+                    <div>
+                        <a href="#" class="text-decoration-none fw-semibold" style="color: #e5e7eb; font-size: 14px;">مریم</a>
+                        <span style="color: #6b7280; font-size: 13px; margin-right: 10px;">
+                            <i class="bi bi-calendar3 me-1"></i> ۱۲ تیر ۱۴۰۵
+                        </span>
+                    </div>
+                </div>
+
+                <h3 class="card-title fw-bold" style="color: white; font-size: 24px; transition: 0.3s;">
+                    <a href="#" class="text-decoration-none" style="color: white; transition: 0.3s;">
+                        طراحی رابط کاربری با Tailwind CSS
+                    </a>
+                </h3>
+
+                <div class="d-flex gap-2 mb-3 flex-wrap">
+                    <span class="badge" style="background: rgba(79, 70, 229, 0.2); color: #818cf8; border: 1px solid rgba(79, 70, 229, 0.2); padding: 5px 12px; border-radius: 20px; font-weight: 400;">
+                        <i class="bi bi-tag"></i> طراحی وب
+                    </span>
+                    <span class="badge" style="background: rgba(6, 182, 212, 0.2); color: #67e8f9; border: 1px solid rgba(6, 182, 212, 0.2); padding: 5px 12px; border-radius: 20px; font-weight: 400;">
+                        <i class="bi bi-tag"></i> Tailwind
+                    </span>
+                </div>
+
+                <p class="card-text" style="color: #9ca3af; line-height: 1.8; font-size: 15px;">
+                    لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است...
+                </p>
+
+                <div class="d-flex justify-content-between align-items-center mt-3">
+                    <a href="{% url 'article-detail'  %}" class="btn btn-gradient" style="border-radius: 30px; padding: 10px 25px; font-size: 14px;">
+                        <i class="bi bi-arrow-left me-2"></i>
+                        ادامه مطلب
+                    </a>
+                    <div class="d-flex gap-3 text-secondary" style="font-size: 14px;">
+                        <span><i class="bi bi-eye me-1"></i> ۸۵۰</span>
+                        <span><i class="bi bi-chat me-1"></i> ۲۳</span>
+                        <span><i class="bi bi-heart me-1"></i> ۶۷</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- صفحه‌بندی مدرن -->
+        <nav aria-label="Page navigation" class="mt-5 fade-up" style="animation-delay: 0.2s;">
+            <ul class="pagination justify-content-center gap-1">
+                <li class="page-item disabled">
+                    <a class="page-link" href="#" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); color: #6b7280; border-radius: 12px; padding: 10px 18px; transition: 0.3s;">
+                        <i class="bi bi-chevron-right"></i>
+                    </a>
+                </li>
+                <li class="page-item active">
+                    <a class="page-link" href="#" style="background: linear-gradient(135deg, #4f46e5, #06b6d4); border: none; color: white; border-radius: 12px; padding: 10px 18px; box-shadow: 0 5px 15px rgba(79, 70, 229, 0.3);">
+                        ۱
+                    </a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="#" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); color: #d1d5db; border-radius: 12px; padding: 10px 18px; transition: 0.3s;">
+                        ۲
+                    </a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="#" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); color: #d1d5db; border-radius: 12px; padding: 10px 18px; transition: 0.3s;">
+                        ۳
+                    </a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="#" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); color: #d1d5db; border-radius: 12px; padding: 10px 18px; transition: 0.3s;">
+                        <i class="bi bi-chevron-left"></i>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    <!-- سایدبار مدرن -->
+    <div class="col-lg-4">
+        <!-- ویجت جستجو -->
+        <div class="card mb-4 fade-up" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); border-radius: 20px; backdrop-filter: blur(10px); animation-delay: 0.05s;">
+            <div class="card-header border-0" style="background: transparent; padding: 20px 24px 0;">
+                <h5 class="fw-bold" style="color: white; font-size: 18px;">
+                    <i class="bi bi-search text-primary me-2"></i>
+                    جستجو
+                </h5>
+            </div>
+            <div class="card-body p-4">
+                <div class="input-group" style="border-radius: 30px; overflow: hidden;">
+                    <input type="text" class="form-control" placeholder="جستجو برای..."
+                           style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); color: white; padding: 12px 20px; border-radius: 30px 0 0 30px; transition: 0.3s;">
+                    <button class="btn btn-gradient" type="button" style="border-radius: 0 30px 30px 0; padding: 12px 25px;">
+                        <i class="bi bi-search"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- دسته‌بندی‌ها -->
+        <div class="card mb-4 fade-up" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); border-radius: 20px; backdrop-filter: blur(10px); animation-delay: 0.1s;">
+            <div class="card-header border-0" style="background: transparent; padding: 20px 24px 0;">
+                <h5 class="fw-bold" style="color: white; font-size: 18px;">
+                    <i class="bi bi-grid-3x3-gap-fill text-primary me-2"></i>
+                    دسته‌بندی‌ها
+                </h5>
+            </div>
+            <div class="card-body p-4">
+                <div class="row g-2">
+                    <div class="col-6">
+                        <a href="#" class="category-item d-block p-2 rounded-3 text-center text-decoration-none"
+                           style="background: rgba(79, 70, 229, 0.1); color: #818cf8; border: 1px solid rgba(79, 70, 229, 0.15); transition: 0.3s; font-size: 14px;">
+                            <i class="bi bi-code-square me-1"></i>
+                            برنامه نویسی
+                            <span class="badge bg-primary bg-opacity-25 ms-1" style="font-size: 10px;">۱۲</span>
+                        </a>
+                    </div>
+                    <div class="col-6">
+                        <a href="#" class="category-item d-block p-2 rounded-3 text-center text-decoration-none"
+                           style="background: rgba(6, 182, 212, 0.1); color: #67e8f9; border: 1px solid rgba(6, 182, 212, 0.15); transition: 0.3s; font-size: 14px;">
+                            <i class="bi bi-palette me-1"></i>
+                            طراحی وب
+                            <span class="badge bg-info bg-opacity-25 ms-1" style="font-size: 10px;">۸</span>
+                        </a>
+                    </div>
+                    <div class="col-6">
+                        <a href="#" class="category-item d-block p-2 rounded-3 text-center text-decoration-none"
+                           style="background: rgba(251, 191, 36, 0.1); color: #fbbf24; border: 1px solid rgba(251, 191, 36, 0.15); transition: 0.3s; font-size: 14px;">
+                            <i class="bi bi-layers me-1"></i>
+                            فریمورک‌ها
+                            <span class="badge bg-warning bg-opacity-25 ms-1" style="font-size: 10px;">۶</span>
+                        </a>
+                    </div>
+                    <div class="col-6">
+                        <a href="#" class="category-item d-block p-2 rounded-3 text-center text-decoration-none"
+                           style="background: rgba(236, 72, 153, 0.1); color: #f472b6; border: 1px solid rgba(236, 72, 153, 0.15); transition: 0.3s; font-size: 14px;">
+                            <i class="bi bi-file-code me-1"></i>
+                            پایتون
+                            <span class="badge bg-danger bg-opacity-25 ms-1" style="font-size: 10px;">۱۵</span>
+                        </a>
+                    </div>
+                    <div class="col-6">
+                        <a href="#" class="category-item d-block p-2 rounded-3 text-center text-decoration-none"
+                           style="background: rgba(52, 211, 153, 0.1); color: #34d399; border: 1px solid rgba(52, 211, 153, 0.15); transition: 0.3s; font-size: 14px;">
+                            <i class="bi bi-database me-1"></i>
+                            جنگو
+                            <span class="badge bg-success bg-opacity-25 ms-1" style="font-size: 10px;">۱۰</span>
+                        </a>
+                    </div>
+                    <div class="col-6">
+                        <a href="#" class="category-item d-block p-2 rounded-3 text-center text-decoration-none"
+                           style="background: rgba(139, 92, 246, 0.1); color: #a78bfa; border: 1px solid rgba(139, 92, 246, 0.15); transition: 0.3s; font-size: 14px;">
+                            <i class="bi bi-bootstrap me-1"></i>
+                            بوت‌استرپ
+                            <span class="badge bg-purple bg-opacity-25 ms-1" style="font-size: 10px;">۷</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- پست‌های محبوب -->
+        <div class="card fade-up" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); border-radius: 20px; backdrop-filter: blur(10px); animation-delay: 0.15s;">
+            <div class="card-header border-0" style="background: transparent; padding: 20px 24px 0;">
+                <h5 class="fw-bold" style="color: white; font-size: 18px;">
+                    <i class="bi bi-fire text-danger me-2"></i>
+                    پست‌های محبوب
+                </h5>
+            </div>
+            <div class="card-body p-4">
+                <div class="popular-post d-flex align-items-center gap-3 mb-3 pb-3" style="border-bottom: 1px solid rgba(255,255,255,0.05); transition: 0.3s;">
+                    <div class="flex-shrink-0" style="width: 60px; height: 60px; background: linear-gradient(135deg, #4f46e5, #06b6d4); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 20px; color: white;">
+                        <i class="bi bi-file-text"></i>
+                    </div>
+                    <div>
+                        <a href="#" class="text-decoration-none d-block fw-semibold" style="color: #e5e7eb; font-size: 14px; transition: 0.3s;">
+                            آموزش جامع جنگو
+                        </a>
+                        <span style="color: #6b7280; font-size: 12px;">
+                            <i class="bi bi-eye me-1"></i> ۲٫۵K بازدید
+                        </span>
+                    </div>
+                </div>
+                <div class="popular-post d-flex align-items-center gap-3 mb-3 pb-3" style="border-bottom: 1px solid rgba(255,255,255,0.05); transition: 0.3s;">
+                    <div class="flex-shrink-0" style="width: 60px; height: 60px; background: linear-gradient(135deg, #f59e0b, #f97316); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 20px; color: white;">
+                        <i class="bi bi-palette"></i>
+                    </div>
+                    <div>
+                        <a href="#" class="text-decoration-none d-block fw-semibold" style="color: #e5e7eb; font-size: 14px; transition: 0.3s;">
+                            طراحی با Tailwind
+                        </a>
+                        <span style="color: #6b7280; font-size: 12px;">
+                            <i class="bi bi-eye me-1"></i> ۱٫۸K بازدید
+                        </span>
+                    </div>
+                </div>
+                <div class="popular-post d-flex align-items-center gap-3" style="transition: 0.3s;">
+                    <div class="flex-shrink-0" style="width: 60px; height: 60px; background: linear-gradient(135deg, #ec4899, #8b5cf6); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 20px; color: white;">
+                        <i class="bi bi-database"></i>
+                    </div>
+                    <div>
+                        <a href="#" class="text-decoration-none d-block fw-semibold" style="color: #e5e7eb; font-size: 14px; transition: 0.3s;">
+                            پایگاه داده در جنگو
+                        </a>
+                        <span style="color: #6b7280; font-size: 12px;">
+                            <i class="bi bi-eye me-1"></i> ۱٫۳K بازدید
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* استایل‌های اضافی برای صفحه اصلی */
+    .blog-card:hover {
+        transform: translateY(-5px);
+        border-color: rgba(79, 70, 229, 0.3) !important;
+        box-shadow: 0 15px 40px -10px rgba(0,0,0,0.4);
+    }
+
+    .blog-card .card-title a:hover {
+        color: #60a5fa !important;
+    }
+
+    .category-item:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+    }
+
+    .popular-post:hover {
+        transform: translateX(-5px);
+    }
+
+    .page-item .page-link:hover {
+        background: rgba(255,255,255,0.1) !important;
+        border-color: rgba(255,255,255,0.15) !important;
+        color: white !important;
+    }
+
+    /* انیمیشن برای آیتم‌ها با تاخیر */
+    .fade-up {
+        animation: fadeUp 0.7s ease forwards;
+        opacity: 0;
+    }
+
+    @keyframes fadeUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* استایل اسکرول برای سایدبار */
+    .card-body {
+        scrollbar-width: thin;
+        scrollbar-color: rgba(255,255,255,0.1) transparent;
+    }
+
+    .card-body::-webkit-scrollbar {
+        width: 4px;
+    }
+
+    .card-body::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    .card-body::-webkit-scrollbar-thumb {
+        background: rgba(255,255,255,0.1);
+        border-radius: 10px;
+    }
+
+    /* بهبود فوتر */
+    .footer {
+        margin-top: 80px !important;
+    }
+</style>
+{% endblock %}
