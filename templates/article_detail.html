@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block title %}
-    شروع کار با جنگو | وبلاگ
+        {{article.title}}
 {% endblock %}
 
 {% block content %}
@@ -13,30 +13,39 @@
             <!-- هدر مقاله با طراحی مدرن -->
             <header class="mb-5">
                 <div class="d-flex align-items-center gap-2 mb-3 flex-wrap">
-                    <span class="badge" style="background: rgba(79, 70, 229, 0.2); color: #818cf8; border: 1px solid rgba(79, 70, 229, 0.2); padding: 6px 14px; border-radius: 20px; font-weight: 500;">
-                        <i class="bi bi-tag me-1"></i> برنامه نویسی
+
+                    {% if article.category %}
+                                          <span class="badge" style="background: rgba(79, 70, 229, 0.2); color: #818cf8; border: 1px solid rgba(79, 70, 229, 0.2); padding: 6px 14px; border-radius: 20px; font-weight: 500;">
+                        <i class="bi bi-tag me-1"></i>  {{article.category.name}}
                     </span>
-                    <span class="badge" style="background: rgba(6, 182, 212, 0.2); color: #67e8f9; border: 1px solid rgba(6, 182, 212, 0.2); padding: 6px 14px; border-radius: 20px; font-weight: 500;">
-                        <i class="bi bi-tag me-1"></i> جنگو
+                    {% endif %}
+
+
+                    {% for tag in article.tag.all %}
+                                        <span class="badge" style="background: rgba(6, 182, 212, 0.2); color: #67e8f9; border: 1px solid rgba(6, 182, 212, 0.2); padding: 6px 14px; border-radius: 20px; font-weight: 500;">
+                        <i class="bi bi-tag me-1"></i> {{tag.name}}
                     </span>
+
+                    {% endfor %}
+
                     <span class="badge" style="background: rgba(251, 191, 36, 0.2); color: #fbbf24; border: 1px solid rgba(251, 191, 36, 0.2); padding: 6px 14px; border-radius: 20px; font-weight: 500;">
                         <i class="bi bi-clock me-1"></i> ۵ دقیقه مطالعه
                     </span>
                 </div>
 
                 <h1 class="fw-bold display-6" style="color: white; line-height: 1.3; margin-bottom: 20px;">
-                    شروع کار با جنگو: راهنمای کامل برای مبتدیان
+                    {{article.title}}
                 </h1>
 
                 <div class="d-flex flex-wrap align-items-center gap-4 text-secondary" style="font-size: 14px;">
                     <div class="d-flex align-items-center gap-2">
                         <div class="avatar-md" style="width: 45px; height: 45px; background: linear-gradient(135deg, #4f46e5, #06b6d4); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; color: white; font-size: 18px;">
-                            A
+                            {{article.author.username}}
                         </div>
                         <div>
-                            <span class="d-block fw-semibold" style="color: #e5e7eb;">ادمین</span>
+                            <span class="d-block fw-semibold" style="color: #e5e7eb;">{{article.author.username}}</span>
                             <span style="color: #6b7280; font-size: 12px;">
-                                <i class="bi bi-calendar3 me-1"></i> ۱۴ تیر ۱۴۰۵
+                                <i class="bi bi-calendar3 me-1"></i> {{article.created_at|date:"Y/m/d"}}
                             </span>
                         </div>
                     </div>
@@ -51,7 +60,7 @@
                     </div>
                 </div>
 
-                <!-- دکمه‌های مدیریت (فقط برای ادمین) -->
+                <!-- دکمه‌های مدیریت (فقط برای {{article.author.username}}) -->
                 {% if user.is_staff %}
                 <div class="mt-3 d-flex gap-2">
                     <a href="#" class="btn btn-sm" style="background: rgba(251, 191, 36, 0.2); color: #fbbf24; border: 1px solid rgba(251, 191, 36, 0.2); border-radius: 30px; padding: 6px 20px; transition: 0.3s;">
@@ -65,9 +74,11 @@
             </header>
 
             <!-- تصویر مقاله -->
-            <figure class="mb-5">
+
+            {% if article.image %}
+                <figure class="mb-5">
                 <div class="position-relative" style="border-radius: 20px; overflow: hidden; background: linear-gradient(135deg, #1e293b, #334155);">
-                    <img class="img-fluid w-100" src="#" alt="تصویر مقاله" style="height: 400px; object-fit: cover; opacity: 0.8;">
+                    <img class="img-fluid w-100" src="{{article.image.url}}" alt="{{article.title}}" style="height: 400px; object-fit: cover; opacity: 0.8;">
                     <div class="position-absolute top-0 end-0 m-3">
                         <span class="badge" style="background: linear-gradient(135deg, #4f46e5, #06b6d4); padding: 8px 16px; border-radius: 30px; backdrop-filter: blur(10px);">
                             <i class="bi bi-star-fill me-1"></i> ویژه
@@ -75,17 +86,18 @@
                     </div>
                 </div>
             </figure>
+            {% endif %}
+
+
 
             <!-- محتوای مقاله -->
             <section class="mb-5" style="color: #d1d5db; line-height: 2;">
                 <div class="article-content" style="font-size: 16px;">
                     <p class="lead" style="color: #e5e7eb; font-size: 18px; font-weight: 400; border-right: 3px solid #4f46e5; padding-right: 20px;">
-                        لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است...
+                       {{article.content|linebreaks}}
                     </p>
 
-                    <p>
-                        لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است، و برای شرایط فعلی تکنولوژی مورد نیاز، و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد، کتابهای زیادی در شصت و سه درصد گذشته حال و آینده، شناخت فراوان جامعه و متخصصان را می طلبد، تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی، و فرهنگ پیشرو در زبان فارسی ایجاد کرد، در این صورت می توان امید داشت که تمام و دشواری موجود در ارائه راهکارها، و شرایط سخت تایپ به پایان رسد و زمان مورد نیاز شامل حروفچینی دستاوردهای اصلی، و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد.
-                    </p>
+
 
                     <!-- بلوک نقل قول -->
                     <blockquote class="blockquote p-4 my-4" style="background: rgba(79, 70, 229, 0.1); border-right: 4px solid #4f46e5; border-radius: 12px; color: #e5e7eb;">
@@ -93,7 +105,7 @@
                             "جنگو یک فریمورک قدرتمند برای ساخت وب‌اپلیکیشن‌های پیچیده با سرعت بالا است."
                         </p>
                         <footer class="blockquote-footer" style="color: #6b7280; font-size: 14px;">
-                            <cite title="Source Title">— ادمین</cite>
+                            <cite title="Source Title">— {{article.author.username}}</cite>
                         </footer>
                     </blockquote>
 
