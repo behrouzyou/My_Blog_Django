@@ -10,8 +10,10 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
+import os
 from pathlib import Path
 from decouple import config
+from django.contrib import staticfiles
 
 
 
@@ -35,6 +37,8 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'jet.dashboard',
+    'jet',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -92,11 +96,11 @@ WSGI_APPLICATION = 'myblog.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME':config('DB_NAME'),
-        'USER':config('DB_USER'),
-        'PASSWORD':config('DB_PASSWORD'),
-        'HOST':config('DB_HOST',default='localhost'),
-        'PORT':config('DB_PORT',default='5432'),
+        'NAME':'pro_blog',
+        'USER':'postgres',
+        'PASSWORD':'123',
+        'HOST':'localhost',
+        'PORT':'5432',
     }
 }
 
@@ -123,7 +127,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/6.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'fa-ir'
 
 TIME_ZONE = 'UTC'
 
@@ -137,6 +141,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']
+STATIC_ROOT=os.path.join(BASE_DIR,'staticfiles')
 
 AUTH_USER_MODEL = 'accounts.CustomUser'
 
