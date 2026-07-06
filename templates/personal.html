@@ -1,0 +1,807 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>صفحه شخصی </title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    <style>
+        :root {
+            --accent-1: #4f46e5;
+            --accent-2: #06b6d4;
+            --accent-3: #8b5cf6;
+            --surface: rgba(255, 255, 255, 0.04);
+            --border: rgba(255, 255, 255, 0.08);
+        }
+
+        body {
+            overflow-x: hidden;
+        }
+
+        .landing-nav {
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(18px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .hero-section {
+            position: relative;
+            min-height: calc(100vh - 80px);
+            display: flex;
+            align-items: center;
+            padding: 80px 0 60px;
+        }
+
+        .hero-glow {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(90px);
+            opacity: 0.45;
+            pointer-events: none;
+        }
+
+        .hero-glow-1 {
+            width: 420px;
+            height: 420px;
+            background: var(--accent-1);
+            top: -80px;
+            right: -100px;
+        }
+
+        .hero-glow-2 {
+            width: 360px;
+            height: 360px;
+            background: var(--accent-2);
+            bottom: 40px;
+            left: -80px;
+        }
+
+        .hero-glow-3 {
+            width: 280px;
+            height: 280px;
+            background: var(--accent-3);
+            top: 40%;
+            left: 45%;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 18px;
+            border-radius: 999px;
+            background: rgba(79, 70, 229, 0.15);
+            border: 1px solid rgba(79, 70, 229, 0.25);
+            color: #a5b4fc;
+            font-size: 14px;
+        }
+
+        .hero-badge .pulse-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #34d399;
+            box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.6);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.6); }
+            70% { box-shadow: 0 0 0 10px rgba(52, 211, 153, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(52, 211, 153, 0); }
+        }
+
+        .hero-title {
+            font-size: clamp(2.2rem, 5vw, 3.8rem);
+            font-weight: 800;
+            line-height: 1.25;
+            letter-spacing: -0.02em;
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #818cf8, #22d3ee, #c084fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 28px;
+            backdrop-filter: blur(16px);
+            padding: 28px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-card::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(79, 70, 229, 0.08), rgba(6, 182, 212, 0.05));
+            pointer-events: none;
+        }
+
+        .profile-ring {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            padding: 4px;
+            background: linear-gradient(135deg, var(--accent-1), var(--accent-2), var(--accent-3));
+            margin: 0 auto 20px;
+        }
+
+        .profile-avatar {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: linear-gradient(145deg, #1e293b, #334155);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 52px;
+            font-weight: 700;
+            color: white;
+        }
+
+        .floating-chip {
+            position: absolute;
+            padding: 10px 16px;
+            border-radius: 16px;
+            background: rgba(15, 23, 42, 0.85);
+            border: 1px solid var(--border);
+            backdrop-filter: blur(12px);
+            font-size: 13px;
+            color: #e5e7eb;
+            animation: float 6s ease-in-out infinite;
+            white-space: nowrap;
+        }
+
+        .chip-1 { top: 12%; left: -10%; animation-delay: 0s; }
+        .chip-2 { bottom: 18%; right: -8%; animation-delay: 1.5s; }
+        .chip-3 { top: 55%; left: -5%; animation-delay: 3s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-12px); }
+        }
+
+        .stat-card,
+        .feature-card,
+        .project-card,
+        .testimonial-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 22px;
+            backdrop-filter: blur(12px);
+            transition: transform 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
+        }
+
+        .stat-card:hover,
+        .feature-card:hover,
+        .project-card:hover,
+        .testimonial-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(79, 70, 229, 0.35);
+            box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5);
+        }
+
+        .section-label {
+            display: inline-block;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            color: #67e8f9;
+            margin-bottom: 12px;
+        }
+
+        .section-title {
+            font-size: clamp(1.6rem, 3vw, 2.4rem);
+            font-weight: 800;
+        }
+
+        .icon-box {
+            width: 56px;
+            height: 56px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin-bottom: 18px;
+        }
+
+        .project-thumb {
+            height: 200px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            color: white;
+            margin-bottom: 20px;
+        }
+
+        .timeline-dot {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
+            flex-shrink: 0;
+            margin-top: 6px;
+        }
+
+        .cta-section {
+            border-radius: 32px;
+            background: linear-gradient(135deg, rgba(79, 70, 229, 0.2), rgba(6, 182, 212, 0.15));
+            border: 1px solid rgba(79, 70, 229, 0.25);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-section::after {
+            content: "";
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: rgba(6, 182, 212, 0.15);
+            border-radius: 50%;
+            filter: blur(60px);
+            top: -100px;
+            left: -50px;
+        }
+
+        .social-btn {
+            width: 46px;
+            height: 46px;
+            border-radius: 14px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid var(--border);
+            color: #d1d5db;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .social-btn:hover {
+            color: white;
+            background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
+            border-color: transparent;
+            transform: translateY(-3px);
+        }
+
+        .skill-tag {
+            display: inline-block;
+            padding: 6px 14px;
+            border-radius: 999px;
+            font-size: 13px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid var(--border);
+            color: #cbd5e1;
+            margin: 4px;
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(28px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (max-width: 991px) {
+            .floating-chip { display: none; }
+            .hero-section { min-height: auto; padding-top: 100px; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg fixed-top landing-nav">
+    <div class="container">
+        <a class="navbar-brand fw-bold" href="#">
+            <i class="bi bi-stars"></i> بهروز اکادمی
+        </a>
+        <button class="navbar-toggler text-white border-0" type="button" data-bs-toggle="collapse" data-bs-target="#landingNav">
+            <i class="bi bi-list fs-3"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="landingNav">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item"><a class="nav-link" href="#about">درباره</a></li>
+                <li class="nav-item"><a class="nav-link" href="#skills">مهارت‌ها</a></li>
+                <li class="nav-item"><a class="nav-link" href="#projects">پروژه‌ها</a></li>
+                <li class="nav-item"><a class="nav-link" href="#contact">تماس</a></li>
+            </ul>
+            <div class="d-flex gap-2">
+                <a href="{% url 'login' %}" class="btn btn-outline-light btn-sm px-4">ورود</a>
+                <a href="{% url 'signup' %}" class="btn btn-gradient btn-sm px-4">شروع کنید</a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero-section">
+    <div class="hero-glow hero-glow-1"></div>
+    <div class="hero-glow hero-glow-2"></div>
+    <div class="hero-glow hero-glow-3"></div>
+
+    <div class="container position-relative">
+        <div class="row align-items-center g-5">
+            <div class="col-lg-6 reveal">
+                <div class="hero-badge mb-4">
+                    <span class="pulse-dot"></span>
+                    در دسترس برای پروژه‌های جدید
+                </div>
+
+                <h1 class="hero-title mb-4">
+                    سلام، من <span class="gradient-text">بهروز یوسف زاده </span> هستم
+                    <br>
+                    <span class="text-white-50 fs-2 fw-semibold">توسعه‌دهنده وب و طراح UI</span>
+                </h1>
+
+                <p class="text-secondary fs-5 mb-4 pe-lg-4" style="line-height: 1.9;">
+                    ایده‌های شما را به تجربه‌های دیجیتال زیبا و کاربردی تبدیل می‌کنم.
+                    عاشق کد تمیز، طراحی خلاقانه و ساخت محصولاتی که واقعاً ارزش دارند.
+                </p>
+
+                <div class="d-flex flex-wrap gap-3 mb-4">
+                    <a href="#projects" class="btn btn-gradient px-4 py-3">
+                        <i class="bi bi-rocket-takeoff me-2"></i>
+                        مشاهده کارها
+                    </a>
+                    <a href="#contact" class="btn btn-outline-light px-4 py-3">
+                        <i class="bi bi-envelope me-2"></i>
+                        تماس با من
+                    </a>
+                </div>
+
+                <div class="d-flex flex-wrap gap-4 pt-2">
+                    <div>
+                        <div class="fs-3 fw-bold gradient-text">+۵۰</div>
+                        <div class="text-secondary small">پروژه موفق</div>
+                    </div>
+                    <div class="border-start border-secondary opacity-25"></div>
+                    <div>
+                        <div class="fs-3 fw-bold gradient-text">+۳ سال</div>
+                        <div class="text-secondary small">تجربه کاری</div>
+                    </div>
+                    <div class="border-start border-secondary opacity-25"></div>
+                    <div>
+                        <div class="fs-3 fw-bold gradient-text">۱۰۰٪</div>
+                        <div class="text-secondary small">رضایت مشتری</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6 reveal">
+                <div class="hero-card position-relative mx-auto" style="max-width: 420px;">
+                    <span class="floating-chip chip-1"><i class="bi bi-code-slash text-info me-1"></i> Django</span>
+                    <span class="floating-chip chip-2"><i class="bi bi-palette text-warning me-1"></i> UI Design</span>
+                    <span class="floating-chip chip-3"><i class="bi bi-lightning text-success me-1"></i> Fast</span>
+
+                    <div class="profile-ring">
+                        <div class="profile-avatar">AR</div>
+                    </div>
+
+                    <div class="text-center position-relative">
+                        <h4 class="fw-bold mb-1">بهروز یوسف زاده </h4>
+                        <p class="text-secondary mb-3">Full-Stack Developer</p>
+
+                        <div class="mb-4">
+                            <span class="skill-tag">Python</span>
+                            <span class="skill-tag">Django</span>
+                            <span class="skill-tag">React</span>
+                            <span class="skill-tag">Bootstrap</span>
+                        </div>
+
+                        <div class="d-flex justify-content-center gap-2">
+                            <a href="#" class="social-btn"><i class="bi bi-github"></i></a>
+                            <a href="#" class="social-btn"><i class="bi bi-linkedin"></i></a>
+                            <a href="#" class="social-btn"><i class="bi bi-telegram"></i></a>
+                            <a href="#" class="social-btn"><i class="bi bi-instagram"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Stats -->
+<section class="py-5">
+    <div class="container">
+        <div class="row g-4">
+            <div class="col-6 col-lg-3 reveal">
+                <div class="stat-card p-4 text-center h-100">
+                    <div class="icon-box mx-auto" style="background: rgba(79,70,229,0.15); color: #818cf8;">
+                        <i class="bi bi-journal-code"></i>
+                    </div>
+                    <h3 class="fw-bold mb-1">۲۴</h3>
+                    <p class="text-secondary mb-0 small">مقاله منتشر شده</p>
+                </div>
+            </div>
+            <div class="col-6 col-lg-3 reveal">
+                <div class="stat-card p-4 text-center h-100">
+                    <div class="icon-box mx-auto" style="background: rgba(6,182,212,0.15); color: #67e8f9;">
+                        <i class="bi bi-people"></i>
+                    </div>
+                    <h3 class="fw-bold mb-1">۱.۲K</h3>
+                    <p class="text-secondary mb-0 small">خواننده فعال</p>
+                </div>
+            </div>
+            <div class="col-6 col-lg-3 reveal">
+                <div class="stat-card p-4 text-center h-100">
+                    <div class="icon-box mx-auto" style="background: rgba(251,191,36,0.15); color: #fbbf24;">
+                        <i class="bi bi-award"></i>
+                    </div>
+                    <h3 class="fw-bold mb-1">۸</h3>
+                    <p class="text-secondary mb-0 small">جایزه و افتخار</p>
+                </div>
+            </div>
+            <div class="col-6 col-lg-3 reveal">
+                <div class="stat-card p-4 text-center h-100">
+                    <div class="icon-box mx-auto" style="background: rgba(236,72,153,0.15); color: #f472b6;">
+                        <i class="bi bi-cup-hot"></i>
+                    </div>
+                    <h3 class="fw-bold mb-1">∞</h3>
+                    <p class="text-secondary mb-0 small">فنجان قهوه!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- About -->
+<section id="about" class="py-5">
+    <div class="container">
+        <div class="row align-items-center g-5">
+            <div class="col-lg-5 reveal">
+                <span class="section-label">درباره من</span>
+                <h2 class="section-title mb-4">داستان من در دنیای<br><span class="gradient-text">توسعه وب</span></h2>
+                <p class="text-secondary" style="line-height: 1.9;">
+                    از اولین خط کد پایتون تا ساخت پلتفرم‌های مقیاس‌پذیر، همیشه یادگیری و خلاقیت
+                    برایم اولویت بوده. امروز روی پروژه‌هایی کار می‌کنم که تجربه کاربری و عملکرد
+                    را در کنار هم قرار می‌دهند.
+                </p>
+            </div>
+            <div class="col-lg-7 reveal">
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <div class="feature-card p-4 h-100">
+                            <div class="d-flex gap-3">
+                                <div class="timeline-dot"></div>
+                                <div>
+                                    <h6 class="fw-bold mb-1">۱۴۰۱ — شروع برنامه‌نویسی</h6>
+                                    <p class="text-secondary small mb-0">یادگیری پایتون و مبانی وب</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="feature-card p-4 h-100">
+                            <div class="d-flex gap-3">
+                                <div class="timeline-dot"></div>
+                                <div>
+                                    <h6 class="fw-bold mb-1">۱۴۰۲ — ورود به Django</h6>
+                                    <p class="text-secondary small mb-0">ساخت اولین وبلاگ و API</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="feature-card p-4 h-100">
+                            <div class="d-flex gap-3">
+                                <div class="timeline-dot"></div>
+                                <div>
+                                    <h6 class="fw-bold mb-1">۱۴۰۳ — طراحی UI/UX</h6>
+                                    <p class="text-secondary small mb-0">تمرکز بر تجربه کاربری مدرن</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="feature-card p-4 h-100">
+                            <div class="d-flex gap-3">
+                                <div class="timeline-dot"></div>
+                                <div>
+                                    <h6 class="fw-bold mb-1">۱۴۰۴ — پروژه‌های فریلنس</h6>
+                                    <p class="text-secondary small mb-0">همکاری با استارتاپ‌ها</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Skills -->
+<section id="skills" class="py-5">
+    <div class="container">
+        <div class="text-center mb-5 reveal">
+            <span class="section-label">مهارت‌ها</span>
+            <h2 class="section-title">چه کارهایی <span class="gradient-text">انجام می‌دهم؟</span></h2>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-6 col-lg-4 reveal">
+                <div class="feature-card p-4 h-100">
+                    <div class="icon-box" style="background: rgba(79,70,229,0.15); color: #818cf8;">
+                        <i class="bi bi-braces"></i>
+                    </div>
+                    <h5 class="fw-bold mb-2">توسعه Backend</h5>
+                    <p class="text-secondary small mb-0">ساخت API، پایگاه داده و معماری مقیاس‌پذیر با Django و Python.</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4 reveal">
+                <div class="feature-card p-4 h-100">
+                    <div class="icon-box" style="background: rgba(6,182,212,0.15); color: #67e8f9;">
+                        <i class="bi bi-layout-wtf"></i>
+                    </div>
+                    <h5 class="fw-bold mb-2">طراحی Frontend</h5>
+                    <p class="text-secondary small mb-0">رابط‌های واکنش‌گرا، مدرن و خلاقانه با Bootstrap و JavaScript.</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4 reveal">
+                <div class="feature-card p-4 h-100">
+                    <div class="icon-box" style="background: rgba(139,92,246,0.15); color: #a78bfa;">
+                        <i class="bi bi-phone"></i>
+                    </div>
+                    <h5 class="fw-bold mb-2">طراحی واکنش‌گرا</h5>
+                    <p class="text-secondary small mb-0">بهینه‌سازی برای موبایل، تبلت و دسکتاپ با UX یکپارچه.</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4 reveal">
+                <div class="feature-card p-4 h-100">
+                    <div class="icon-box" style="background: rgba(52,211,153,0.15); color: #34d399;">
+                        <i class="bi bi-speedometer2"></i>
+                    </div>
+                    <h5 class="fw-bold mb-2">بهینه‌سازی عملکرد</h5>
+                    <p class="text-secondary small mb-0">سرعت بارگذاری، SEO و تجربه روان برای کاربر نهایی.</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4 reveal">
+                <div class="feature-card p-4 h-100">
+                    <div class="icon-box" style="background: rgba(251,191,36,0.15); color: #fbbf24;">
+                        <i class="bi bi-pencil-square"></i>
+                    </div>
+                    <h5 class="fw-bold mb-2">تولید محتوا</h5>
+                    <p class="text-secondary small mb-0">نوشتن مقالات آموزشی و مستندسازی پروژه‌ها.</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4 reveal">
+                <div class="feature-card p-4 h-100">
+                    <div class="icon-box" style="background: rgba(236,72,153,0.15); color: #f472b6;">
+                        <i class="bi bi-lightbulb"></i>
+                    </div>
+                    <h5 class="fw-bold mb-2">مشاوره فنی</h5>
+                    <p class="text-secondary small mb-0">راهنمایی در انتخاب تکنولوژی و معماری مناسب پروژه.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Projects -->
+<section id="projects" class="py-5">
+    <div class="container">
+        <div class="d-flex flex-wrap justify-content-between align-items-end mb-5 gap-3 reveal">
+            <div>
+                <span class="section-label">نمونه کارها</span>
+                <h2 class="section-title mb-0">پروژه‌های <span class="gradient-text">برگزیده</span></h2>
+            </div>
+            <a href="{% url 'home' %}" class="text-decoration-none" style="color: #60a5fa;">
+                مشاهده وبلاگ <i class="bi bi-arrow-left"></i>
+            </a>
+        </div>
+
+        <div class="row g-4">
+            <div class="col-md-6 col-lg-4 reveal">
+                <div class="project-card p-4 h-100">
+                    <div class="project-thumb" style="background: linear-gradient(135deg, #4f46e5, #06b6d4);">
+                        <i class="bi bi-journal-richtext"></i>
+                    </div>
+                    <span class="badge mb-2" style="background: rgba(79,70,229,0.2); color: #818cf8;">Django</span>
+                    <h5 class="fw-bold mb-2">پلتفرم وبلاگ هوش مصنوعی</h5>
+                    <p class="text-secondary small">سیستم مدیریت محتوا با UI مدرن، احراز هویت و پنل کاربری.</p>
+                    <a href="{% url 'home' %}" class="btn btn-sm btn-outline-light mt-2 rounded-pill px-3">
+                        جزئیات <i class="bi bi-arrow-left"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4 reveal">
+                <div class="project-card p-4 h-100">
+                    <div class="project-thumb" style="background: linear-gradient(135deg, #f59e0b, #f97316);">
+                        <i class="bi bi-cart-check"></i>
+                    </div>
+                    <span class="badge mb-2" style="background: rgba(251,191,36,0.2); color: #fbbf24;">E-Commerce</span>
+                    <h5 class="fw-bold mb-2">فروشگاه آنلاین</h5>
+                    <p class="text-secondary small">فروشگاه با سبد خرید، درگاه پرداخت و پنل مدیریت محصولات.</p>
+                    <a href="#" class="btn btn-sm btn-outline-light mt-2 rounded-pill px-3">
+                        جزئیات <i class="bi bi-arrow-left"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4 reveal">
+                <div class="project-card p-4 h-100">
+                    <div class="project-thumb" style="background: linear-gradient(135deg, #ec4899, #8b5cf6);">
+                        <i class="bi bi-graph-up-arrow"></i>
+                    </div>
+                    <span class="badge mb-2" style="background: rgba(236,72,153,0.2); color: #f472b6;">Dashboard</span>
+                    <h5 class="fw-bold mb-2">داشبورد تحلیلی</h5>
+                    <p class="text-secondary small">نمایش داده‌ها با نمودارهای تعاملی و گزارش‌گیری لحظه‌ای.</p>
+                    <a href="#" class="btn btn-sm btn-outline-light mt-2 rounded-pill px-3">
+                        جزئیات <i class="bi bi-arrow-left"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Testimonials -->
+<section class="py-5">
+    <div class="container">
+        <div class="text-center mb-5 reveal">
+            <span class="section-label">نظرات</span>
+            <h2 class="section-title">مشتریان چه <span class="gradient-text">می‌گویند؟</span></h2>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-4 reveal">
+                <div class="testimonial-card p-4 h-100">
+                    <div class="text-warning mb-3">
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                    </div>
+                    <p class="text-secondary small mb-4" style="line-height: 1.8;">
+                        «تحویل سریع، طراحی فوق‌العاده و پشتیبانی عالی. پروژه‌ام دقیقاً همان چیزی شد که می‌خواستم.»
+                    </p>
+                    <div class="d-flex align-items-center gap-3">
+                        <div class="rounded-circle d-flex align-items-center justify-content-center fw-bold"
+                             style="width:44px;height:44px;background:linear-gradient(135deg,#4f46e5,#06b6d4);">س</div>
+                        <div>
+                            <div class="fw-semibold small">سارا محمدی</div>
+                            <div class="text-secondary" style="font-size:12px;">مدیر محصول</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 reveal">
+                <div class="testimonial-card p-4 h-100">
+                    <div class="text-warning mb-3">
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                    </div>
+                    <p class="text-secondary small mb-4" style="line-height: 1.8;">
+                        «کد تمیز و مستندسازی کامل. همکاری با ایشان تجربه‌ای حرفه‌ای و لذت‌بخش بود.»
+                    </p>
+                    <div class="d-flex align-items-center gap-3">
+                        <div class="rounded-circle d-flex align-items-center justify-content-center fw-bold"
+                             style="width:44px;height:44px;background:linear-gradient(135deg,#f59e0b,#f97316);">م</div>
+                        <div>
+                            <div class="fw-semibold small">محمد کریمی</div>
+                            <div class="text-secondary" style="font-size:12px;">بنیان‌گذار استارتاپ</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 reveal">
+                <div class="testimonial-card p-4 h-100">
+                    <div class="text-warning mb-3">
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-half"></i>
+                    </div>
+                    <p class="text-secondary small mb-4" style="line-height: 1.8;">
+                        «UI/UX خلاقانه و توجه به جزئیات. سایت ما بعد از redesign رشد چشمگیری داشت.»
+                    </p>
+                    <div class="d-flex align-items-center gap-3">
+                        <div class="rounded-circle d-flex align-items-center justify-content-center fw-bold"
+                             style="width:44px;height:44px;background:linear-gradient(135deg,#ec4899,#8b5cf6);">ن</div>
+                        <div>
+                            <div class="fw-semibold small">نازنین احمدی</div>
+                            <div class="text-secondary" style="font-size:12px;">طراح گرافیک</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA -->
+<section id="contact" class="py-5">
+    <div class="container reveal">
+        <div class="cta-section p-5 p-lg-5 text-center position-relative">
+            <div class="position-relative" style="z-index: 1;">
+                <span class="section-label">همکاری</span>
+                <h2 class="section-title mb-3">پروژه بعدی را با هم<br><span class="gradient-text">بسازیم</span></h2>
+                <p class="text-secondary mx-auto mb-4" style="max-width: 520px; line-height: 1.8;">
+                    اگر ایده‌ای دارید یا به یک توسعه‌دهنده خلاق نیاز دارید، خوشحال می‌شوم بشنوم.
+                </p>
+                <div class="d-flex flex-wrap justify-content-center gap-3">
+                    <a href="mailto:hello@example.com" class="btn btn-gradient px-5 py-3">
+                        <i class="bi bi-send me-2"></i>
+                        ارسال پیام
+                    </a>
+                    <a href="{% url 'signup' %}" class="btn btn-outline-light px-5 py-3">
+                        <i class="bi bi-person-plus me-2"></i>
+                        عضویت در وبلاگ
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="container">
+        <div class="row align-items-center g-4">
+            <div class="col-md-4 text-center text-md-start">
+                <h5 class="fw-bold mb-1"><i class="bi bi-stars"></i> بهروز اکادمی</h5>
+                <p class="text-secondary small mb-0">ساخته شده با Django و Bootstrap</p>
+            </div>
+            <div class="col-md-4 text-center">
+                <div class="d-flex justify-content-center gap-2">
+                    <a href="#" class="social-btn"><i class="bi bi-github"></i></a>
+                    <a href="#" class="social-btn"><i class="bi bi-linkedin"></i></a>
+                    <a href="#" class="social-btn"><i class="bi bi-telegram"></i></a>
+                    <a href="#" class="social-btn"><i class="bi bi-envelope"></i></a>
+                </div>
+            </div>
+            <div class="col-md-4 text-center text-md-end">
+                <p class="text-secondary small mb-0">© ۱۴۰۵ — تمامی حقوق محفوظ است</p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry, i) => {
+            if (entry.isIntersecting) {
+                entry.target.style.transitionDelay = `${(i % 4) * 0.1}s`;
+                entry.target.classList.add('visible');
+            }
+        });
+    }, { threshold: 0.12 });
+    reveals.forEach(el => observer.observe(el));
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                e.preventDefault();
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        });
+    });
+</script>
+</body>
+</html>

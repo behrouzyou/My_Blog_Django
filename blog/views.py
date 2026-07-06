@@ -12,3 +12,5 @@ def profile(request):
     return render(request,'profile.html')
 def article_form(request):
     return render(request,'article_form.html')
+def personal(request):
+    return render(request,'personal.html')
