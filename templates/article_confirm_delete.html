@@ -1,0 +1,311 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    تایید حذف مقاله | وبلاگ
+{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center align-items-center min-vh-75">
+    <div class="col-md-6 col-lg-5">
+        <!-- کارت تایید حذف با افکت شیشه‌ای -->
+        <div class="card delete-card fade-up" style="background: rgba(255,255,255,0.05); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.1); border-radius: 24px; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);">
+
+            <!-- هدر با آیکون هشدار -->
+            <div class="card-header text-center border-0 pt-4 pb-0" style="background: transparent;">
+                <div class="avatar-circle mx-auto mb-3" style="width: 80px; height: 80px; background: linear-gradient(135deg, #ef4444, #dc2626); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 40px; box-shadow: 0 10px 30px rgba(239, 68, 68, 0.3); animation: pulse-danger 2s infinite;">
+                    <i class="bi bi-exclamation-triangle-fill text-white"></i>
+                </div>
+                <h3 class="fw-bold" style="color: white; font-size: 26px;">تایید حذف مقاله</h3>
+                <p class="text-secondary" style="font-size: 14px;">
+                    <i class="bi bi-info-circle me-1"></i>
+                    این عملیات غیرقابل بازگشت است
+                </p>
+            </div>
+
+            <!-- بدنه فرم -->
+            <div class="card-body p-4 pt-3">
+                <form method="post">
+                    {% csrf_token %}
+
+                    <!-- جعبه هشدار -->
+                    <div class="alert-box p-4 mb-4" style="background: rgba(239, 68, 68, 0.08); border: 1px solid rgba(239, 68, 68, 0.2); border-radius: 16px; text-align: center;">
+                        <div class="d-flex align-items-center justify-content-center gap-3 flex-wrap">
+                            <i class="bi bi-file-text" style="color: #f87171; font-size: 24px;"></i>
+                            <span style="color: #fca5a5; font-size: 16px; font-weight: 500;">
+                                عنوان
+                            </span>
+                            <span class="badge" style="background: rgba(239, 68, 68, 0.2); color: #f87171; padding: 5px 12px; border-radius: 20px; font-weight: 400; font-size: 12px;">
+                                <i class="bi bi-calendar3 me-1"></i>
+                               تاریخ ایجاد
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- اطلاعات مقاله -->
+                    <div class="article-info p-3 mb-4" style="background: rgba(255,255,255,0.03); border-radius: 12px; border: 1px solid rgba(255,255,255,0.06);">
+                        <div class="row g-2 text-center">
+                            <div class="col-4">
+                                <div style="color: #6b7280; font-size: 12px;">وضعیت</div>
+                                <span class="badge" style="background: rgba(251, 191, 36, 0.2); color: #fbbf24; padding: 4px 12px; border-radius: 20px; font-weight: 400; font-size: 12px;">
+                                    <i class="bi bi-clock-history me-1"></i> در انتظار حذف
+                                </span>
+                            </div>
+                            <div class="col-4">
+                                <div style="color: #6b7280; font-size: 12px;">نویسنده</div>
+                                <span style="color: #e5e7eb; font-size: 14px;">
+                                    <i class="bi bi-person me-1"></i>
+                                    نویسنده بهروز
+                                </span>
+                            </div>
+                            <div class="col-4">
+                                <div style="color: #6b7280; font-size: 12px;">دسته‌بندی</div>
+                                <span style="color: #e5e7eb; font-size: 14px;">
+                                    <i class="bi bi-tag me-1"></i>
+                                    دسته بندی
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- سوال تایید -->
+                    <div class="confirm-text text-center mb-4 p-3" style="background: rgba(255,255,255,0.02); border-radius: 12px; border-right: 3px solid #ef4444;">
+                        <p style="color: #d1d5db; font-size: 16px; margin: 0;">
+                            <i class="bi bi-question-circle text-danger me-2"></i>
+                            آیا از حذف مقاله
+                            <span style="color: #fca5a5; font-weight: 600;">عنوان مقاله</span>
+                            مطمئن هستید؟
+                        </p>
+                    </div>
+
+                    <!-- دکمه‌های عملیات -->
+                    <div class="d-flex gap-3 mt-4">
+                        <button type="submit" class="btn btn-danger flex-grow-1"
+                                style="border-radius: 12px; padding: 12px; font-weight: 600; background: linear-gradient(135deg, #ef4444, #dc2626); border: none; transition: 0.3s; position: relative; overflow: hidden;">
+                            <i class="bi bi-trash3 me-2"></i>
+                            بله، حذف کن
+                            <span style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 0; height: 0; background: rgba(255,255,255,0.2); border-radius: 50%; transition: 0.5s;"></span>
+                        </button>
+                        <a href="#" class="btn flex-grow-1"
+                           style="border-radius: 12px; padding: 12px; font-weight: 600; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: #d1d5db; transition: 0.3s;">
+                            <i class="bi bi-x-lg me-2"></i>
+                            انصراف
+                        </a>
+                    </div>
+                </form>
+            </div>
+
+            <!-- فوتر با هشدار اضافی -->
+            <div class="card-footer text-center border-0 pt-0 pb-4" style="background: transparent;">
+                <div style="position: relative; margin-bottom: 15px;">
+                    <hr style="border-color: rgba(255,255,255,0.05);">
+                    <span style="position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: #0f172a; padding: 0 15px; color: #6b7280; font-size: 12px;">
+                        <i class="bi bi-shield-exclamation"></i>
+                    </span>
+                </div>
+
+                <div class="d-flex justify-content-center gap-4 text-secondary" style="font-size: 13px;">
+                    <span>
+                        <i class="bi bi-arrow-counterclockwise text-warning me-1"></i>
+                        غیرقابل بازگشت
+                    </span>
+                    <span>
+                        <i class="bi bi-database-slash text-danger me-1"></i>
+                        حذف دائمی
+                    </span>
+                    <span>
+                        <i class="bi bi-shield-check text-success me-1"></i>
+                        تایید نهایی
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <!-- متن راهنما -->
+        <div class="text-center mt-4 fade-up" style="animation-delay: 0.3s;">
+            <p class="text-secondary" style="font-size: 13px;">
+                <i class="bi bi-info-circle text-primary me-1"></i>
+                با حذف این مقاله، تمام نظرات مرتبط نیز حذف خواهند شد
+            </p>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* استایل‌های اختصاصی برای صفحه تایید حذف */
+    .delete-card {
+        animation: fadeUp 0.7s ease;
+        transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .delete-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 30px 60px -15px rgba(239, 68, 68, 0.2) !important;
+    }
+
+    /* انیمیشن پالس برای آیکون هشدار */
+    @keyframes pulse-danger {
+        0% {
+            box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4);
+        }
+        70% {
+            box-shadow: 0 0 0 15px rgba(239, 68, 68, 0);
+        }
+        100% {
+            box-shadow: 0 0 0 0 rgba(239, 68, 68, 0);
+        }
+    }
+
+    /* استایل دکمه حذف */
+    .btn-danger:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px rgba(239, 68, 68, 0.3);
+    }
+
+    .btn-danger:hover span {
+        width: 300px;
+        height: 300px;
+    }
+
+    .btn-danger:active {
+        transform: scale(0.95);
+    }
+
+    /* استایل دکمه انصراف */
+    .btn-cancel:hover {
+        background: rgba(255,255,255,0.1) !important;
+        border-color: rgba(255,255,255,0.2) !important;
+        color: white !important;
+        transform: translateY(-2px);
+    }
+
+    /* انیمیشن fade-up */
+    .fade-up {
+        animation: fadeUp 0.7s ease forwards;
+        opacity: 0;
+    }
+
+    @keyframes fadeUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* استایل برای موبایل */
+    @media (max-width: 768px) {
+        .delete-card {
+            margin: 0 10px;
+        }
+        .avatar-circle {
+            width: 60px !important;
+            height: 60px !important;
+            font-size: 30px !important;
+        }
+        .article-info .row {
+            gap: 10px 0;
+        }
+        .article-info .col-4 {
+            padding: 5px 0;
+        }
+    }
+
+    .min-vh-75 {
+        min-height: 75vh;
+    }
+
+    /* استایل برای اطلاعات مقاله */
+    .article-info .col-4 {
+        border-left: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .article-info .col-4:last-child {
+        border-left: none;
+    }
+
+    @media (max-width: 576px) {
+        .article-info .col-4 {
+            border-left: none;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .article-info .col-4:last-child {
+            border-bottom: none;
+        }
+    }
+
+    /* استایل برای جعبه هشدار */
+    .alert-box {
+        transition: 0.3s;
+    }
+
+    .alert-box:hover {
+        background: rgba(239, 68, 68, 0.12) !important;
+    }
+
+    /* استایل برای متن سوال */
+    .confirm-text {
+        transition: 0.3s;
+    }
+
+    .confirm-text:hover {
+        background: rgba(255,255,255,0.04) !important;
+    }
+
+    /* بهبود دکمه‌ها در حالت فوکوس */
+    .btn:focus-visible {
+        outline: 2px solid #4f46e5;
+        outline-offset: 2px;
+    }
+</style>
+
+<!-- جاوااسکریپت برای انیمیشن‌ها -->
+<script>
+    // انیمیشن ripple برای دکمه حذف
+    document.querySelector('.btn-danger').addEventListener('click', function(e) {
+        const ripple = document.createElement('span');
+        const rect = this.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+
+        ripple.style.cssText = `
+            position: absolute;
+            top: ${y}px;
+            left: ${x}px;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.3);
+            transform: translate(-50%, -50%);
+            animation: rippleEffect 0.6s ease-out forwards;
+            pointer-events: none;
+        `;
+
+        this.appendChild(ripple);
+        setTimeout(() => ripple.remove(), 600);
+    });
+
+    // استایل برای انیمیشن ripple
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes rippleEffect {
+            to {
+                width: 300px;
+                height: 300px;
+                opacity: 0;
+            }
+        }
+    `;
+    document.head.appendChild(style);
+
+    // هشدار قبل از حذف (تایید دوباره)
+    document.querySelector('.btn-danger').addEventListener('click', function(e) {
+        if (!confirm('آیا از حذف این مقاله مطمئن هستید؟ این عملیات غیرقابل بازگشت است!')) {
+            e.preventDefault();
+        }
+    });
+</script>
+{% endblock %}

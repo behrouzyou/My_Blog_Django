@@ -69,15 +69,31 @@
 
             </form>
 
-            <a href="#" class="btn btn-outline-light me-2">
+
+         {% if not user %}
+               <a href="{% url 'login' %}" class="btn btn-outline-light me-2">
                 ورود
             </a>
 
-            <a href="#" class="btn btn-gradient">
+            <a href="{% url 'signup' %}" class="btn btn-gradient">
                 ثبت نام
             </a>
+            {% else %}
+            <a href="#" class="btn btn-gradient">
+                خروج
+            </a>
+         {% endif %}
+
 
         </div>
+
+        {% if user.is_authenticated %}
+             <a href="{% url 'article-create' %}" class="btn btn-primary m-2">افزودن مقاله جدید</a>
+        {% endif %}
+
+
+
+
 
     </div>
 
@@ -88,6 +104,9 @@
 <main class="container fade-up">
 
     {% block content %}
+
+
+
     {% endblock %}
 
 </main>
