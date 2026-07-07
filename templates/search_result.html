@@ -1,0 +1,476 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block title %}
+   {{ query }}
+{% endblock %}
+
+{% block content %}
+<div class="row g-4">
+    <!-- بخش اصلی نتایج -->
+    <div class="col-lg-8">
+        <div class="d-flex align-items-center gap-3 mb-4 flex-wrap">
+            <h2 class="fw-bold" style="color: white; font-size: 26px; position: relative;">
+                <i class="bi bi-search text-primary me-2">نتایج جستجو  {{query}}</i>
+
+                <span style="position: absolute; bottom: -5px; right: 0; width: 40px; height: 3px; background: linear-gradient(90deg, #4f46e5, #06b6d4); border-radius: 10px;"></span>
+            </h2>
+            <span class="badge" style="background: rgba(79, 70, 229, 0.2); color: #818cf8; padding: 8px 18px; border-radius: 30px; font-size: 14px;">
+                <i class="bi bi-file-text me-1"></i>
+                {{ articles.count }} نتیجه
+            </span>
+        </div>
+
+        <!-- عبارت جستجو -->
+        <div class="search-query-box p-3 mb-4" style="background: rgba(255,255,255,0.03); border-radius: 16px; border: 1px solid rgba(255,255,255,0.06);">
+            <p style="color: #9ca3af; margin: 0; font-size: 15px;">
+                <i class="bi bi-quote text-primary me-2"></i>
+                نتایج جستجو برای عبارت:
+                <span class="fw-bold" style="color: #60a5fa; font-size: 18px;">"{{ query }}"</span>
+            </p>
+        </div>
+
+        <!-- لیست مقالات -->
+        <div class="articles-list">
+            {% for article in articles %}
+                <div class="card mb-4 search-result-card fade-up" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); border-radius: 20px; overflow: hidden; transition: 0.4s; backdrop-filter: blur(10px); animation-delay: {{ forloop.counter|add:-1|stringformat:"d" }}s;">
+                    <div class="row g-0">
+                        <!-- تصویر مقاله -->
+                        {% if article.image %}
+                            <div class="col-md-4">
+                                <img src="#" alt="title"
+                                     style="width: 100%; height: 100%; min-height: 200px; object-fit: cover; background: linear-gradient(135deg, #1e293b, #334155);">
+                            </div>
+                            <div class="col-md-8">
+                        {% else %}
+                            <div class="col-md-12">
+                        {% endif %}
+                                <div class="card-body p-4">
+                                    <!-- هدر مقاله -->
+                                    <div class="d-flex align-items-center gap-2 mb-2 flex-wrap">
+                                        <div class="d-flex align-items-center gap-2">
+                                            <div class="avatar-sm" style="width: 30px; height: 30px; background: linear-gradient(135deg, #4f46e5, #06b6d4); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 600; color: white; font-size: 12px;">
+                                                {{ article.author.username|first|upper }}
+                                            </div>
+                                            <span style="color: #e5e7eb; font-size: 13px; font-weight: 500;">
+                                                {{ article.author.username }}
+                                            </span>
+                                        </div>
+                                        <span style="color: #6b7280; font-size: 12px;">
+                                            <i class="bi bi-calendar3 me-1"></i>
+                                            {{ article.created_at|date:"Y/m/d" }}
+                                        </span>
+                                        {% if article.category %}
+                                            <span class="badge" style="background: rgba(79, 70, 229, 0.15); color: #818cf8; padding: 3px 12px; border-radius: 30px; font-weight: 400; font-size: 11px;">
+                                                <i class="bi bi-tag me-1"></i>
+                                                {{ article.category }}
+                                            </span>
+                                        {% endif %}
+                                    </div>
+
+                                    <!-- عنوان و محتوا -->
+                                    <h3 class="card-title fw-bold" style="color: white; font-size: 20px; margin-bottom: 10px;">
+                                        <a href="#"
+                                           class="text-decoration-none" style="color: white; transition: 0.3s;">
+                                            {{ article.title }}
+                                        </a>
+                                    </h3>
+
+                                    <p class="card-text" style="color: #9ca3af; line-height: 1.8; font-size: 14px; margin-bottom: 15px;">
+                                        {{ article.content|truncatewords:30|safe }}
+                                    </p>
+
+                                    <!-- فوتر مقاله -->
+                                    <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
+                                        <a href="{% url 'article-detail' slug=article.slug %}"
+                                           class="btn btn-gradient" style="border-radius: 30px; padding: 8px 22px; font-size: 13px;">
+                                            <i class="bi bi-arrow-left me-2"> ادامه مطلب</i>
+
+                                        </a>
+                                        <div class="d-flex gap-3 text-secondary" style="font-size: 13px;">
+                                            <span>
+                                                <i class="bi bi-eye me-1"></i>
+                                                {{ article.views|default:"۰" }}
+                                            </span>
+                                            <span>
+                                                <i class="bi bi-chat me-1"></i>
+                                                {{ article.comments.count }}
+                                            </span>
+                                            {% if article.status == 'published' %}
+                                                <span class="text-success">
+                                                    <i class="bi bi-check-circle-fill me-1"></i>
+                                                    منتشر شده
+                                                </span>
+                                            {% else %}
+                                                <span class="text-warning">
+                                                    <i class="bi bi-pencil-square me-1"></i>
+                                                    پیش‌نویس
+                                                </span>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% empty %}
+                    <!-- پیام خالی -->
+                    <div class="empty-state text-center py-5" style="background: rgba(255,255,255,0.03); border-radius: 20px; border: 2px dashed rgba(255,255,255,0.06);">
+                        <div class="empty-icon mb-4">
+                            <i class="bi bi-search" style="font-size: 70px; color: #4f46e5; opacity: 0.3;"></i>
+                        </div>
+                        <h4 style="color: #e5e7eb; margin-bottom: 10px;">
+                            هیچ مقاله‌ای پیدا نشد!
+                        </h4>
+                        <p style="color: #9ca3af; font-size: 15px; max-width: 400px; margin: 0 auto;">
+                            برای عبارت
+                            <span class="fw-bold" style="color: #60a5fa;">"{{ query }}"</span>
+                            هیچ مقاله‌ای یافت نشد. لطفاً عبارت دیگری را جستجو کنید.
+                        </p>
+                        <div class="suggestions mt-4">
+                            <p style="color: #6b7280; font-size: 13px;">پیشنهادات:</p>
+                            <div class="d-flex gap-2 justify-content-center flex-wrap">
+                                <span class="badge" style="background: rgba(255,255,255,0.05); color: #9ca3af; padding: 6px 16px; border-radius: 30px; font-weight: 400; cursor: pointer;">
+                                    جنگو
+                                </span>
+                                <span class="badge" style="background: rgba(255,255,255,0.05); color: #9ca3af; padding: 6px 16px; border-radius: 30px; font-weight: 400; cursor: pointer;">
+                                    پایتون
+                                </span>
+                                <span class="badge" style="background: rgba(255,255,255,0.05); color: #9ca3af; padding: 6px 16px; border-radius: 30px; font-weight: 400; cursor: pointer;">
+                                    طراحی وب
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <!-- صفحه‌بندی مدرن -->
+            {% if is_paginated %}
+                <nav aria-label="Page navigation" class="mt-5 fade-up" style="animation-delay: 0.3s;">
+                    <ul class="pagination justify-content-center gap-1">
+                        {% if page_obj.has_previous %}
+                            <li class="page-item">
+                                <a class="page-link" href="?q={{ query }}&page={{ page_obj.previous_page_number }}"
+                                   style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); color: #d1d5db; border-radius: 12px; padding: 10px 18px; transition: 0.3s;">
+                                    <i class="bi bi-chevron-right"></i>
+                                    قبلی
+                                </a>
+                            </li>
+                        {% else %}
+                            <li class="page-item disabled">
+                                <a class="page-link" href="#"
+                                   style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.04); color: #6b7280; border-radius: 12px; padding: 10px 18px;">
+                                    <i class="bi bi-chevron-right"></i>
+                                    قبلی
+                                </a>
+                            </li>
+                        {% endif %}
+
+                        {% for i in paginator.page_range %}
+                            {% if page_obj.number == i %}
+                                <li class="page-item active">
+                                    <span class="page-link"
+                                          style="background: linear-gradient(135deg, #4f46e5, #06b6d4); border: none; color: white; border-radius: 12px; padding: 10px 18px; box-shadow: 0 5px 15px rgba(79, 70, 229, 0.3);">
+                                        {{ i }}
+                                    </span>
+                                </li>
+                            {% else %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?q={{ query }}&page={{ i }}"
+                                       style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); color: #d1d5db; border-radius: 12px; padding: 10px 18px; transition: 0.3s;">
+                                        {{ i }}
+                                    </a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+
+                        {% if page_obj.has_next %}
+                            <li class="page-item">
+                                <a class="page-link" href="?q={{ query }}&page={{ page_obj.next_page_number }}"
+                                   style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); color: #d1d5db; border-radius: 12px; padding: 10px 18px; transition: 0.3s;">
+                                    بعدی
+                                    <i class="bi bi-chevron-left"></i>
+                                </a>
+                            </li>
+                        {% else %}
+                            <li class="page-item disabled">
+                                <a class="page-link" href="#"
+                                   style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.04); color: #6b7280; border-radius: 12px; padding: 10px 18px;">
+                                    بعدی
+                                    <i class="bi bi-chevron-left"></i>
+                                </a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </nav>
+            {% endif %}
+        </div>
+
+        <!-- سایدبار -->
+        <div class="col-lg-4">
+            <!-- ویجت جستجو -->
+            <div class="card mb-4 fade-up" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); border-radius: 20px; backdrop-filter: blur(10px); animation-delay: 0.05s;">
+                <div class="card-header border-0" style="background: transparent; padding: 20px 24px 0;">
+                    <h5 class="fw-bold" style="color: white; font-size: 18px;">
+                        <i class="bi bi-search text-primary me-2"></i>
+                        جستجوی مجدد
+                    </h5>
+                </div>
+                <div class="card-body p-4">
+                    <form method="get" action="#">
+                        <div class="input-group" style="border-radius: 30px; overflow: hidden;">
+                            <input type="text" class="form-control" name="q" value="{{ query }}"
+                                   placeholder="جستجو برای..."
+                                   style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); color: white; padding: 12px 20px; border-radius: 30px 0 0 30px; transition: 0.3s;">
+                            <button class="btn btn-gradient" type="submit"
+                                    style="border-radius: 0 30px 30px 0; padding: 12px 25px;">
+                                <i class="bi bi-search"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- دسته‌بندی‌ها -->
+            <div class="card mb-4 fade-up" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); border-radius: 20px; backdrop-filter: blur(10px); animation-delay: 0.1s;">
+                <div class="card-header border-0" style="background: transparent; padding: 20px 24px 0;">
+                    <h5 class="fw-bold" style="color: white; font-size: 18px;">
+                        <i class="bi bi-grid-3x3-gap-fill text-primary me-2"></i>
+                        دسته‌بندی‌ها
+                    </h5>
+                </div>
+                <div class="card-body p-4">
+                    <div class="row g-2">
+                        <div class="col-6">
+                            <a href="#" class="category-item d-block p-2 rounded-3 text-center text-decoration-none"
+                               style="background: rgba(79, 70, 229, 0.1); color: #818cf8; border: 1px solid rgba(79, 70, 229, 0.15); transition: 0.3s; font-size: 14px;">
+                                <i class="bi bi-code-square me-1"></i>
+                                برنامه نویسی
+                            </a>
+                        </div>
+                        <div class="col-6">
+                            <a href="#" class="category-item d-block p-2 rounded-3 text-center text-decoration-none"
+                               style="background: rgba(6, 182, 212, 0.1); color: #67e8f9; border: 1px solid rgba(6, 182, 212, 0.15); transition: 0.3s; font-size: 14px;">
+                                <i class="bi bi-palette me-1"></i>
+                                طراحی وب
+                            </a>
+                        </div>
+                        <div class="col-6">
+                            <a href="#" class="category-item d-block p-2 rounded-3 text-center text-decoration-none"
+                               style="background: rgba(251, 191, 36, 0.1); color: #fbbf24; border: 1px solid rgba(251, 191, 36, 0.15); transition: 0.3s; font-size: 14px;">
+                                <i class="bi bi-layers me-1"></i>
+                                فریمورک‌ها
+                            </a>
+                        </div>
+                        <div class="col-6">
+                            <a href="#" class="category-item d-block p-2 rounded-3 text-center text-decoration-none"
+                               style="background: rgba(236, 72, 153, 0.1); color: #f472b6; border: 1px solid rgba(236, 72, 153, 0.15); transition: 0.3s; font-size: 14px;">
+                                <i class="bi bi-file-code me-1"></i>
+                                پایتون
+                            </a>
+                        </div>
+                        <div class="col-6">
+                            <a href="#" class="category-item d-block p-2 rounded-3 text-center text-decoration-none"
+                               style="background: rgba(52, 211, 153, 0.1); color: #34d399; border: 1px solid rgba(52, 211, 153, 0.15); transition: 0.3s; font-size: 14px;">
+                                <i class="bi bi-database me-1"></i>
+                                جنگو
+                            </a>
+                        </div>
+                        <div class="col-6">
+                            <a href="#" class="category-item d-block p-2 rounded-3 text-center text-decoration-none"
+                               style="background: rgba(139, 92, 246, 0.1); color: #a78bfa; border: 1px solid rgba(139, 92, 246, 0.15); transition: 0.3s; font-size: 14px;">
+                                <i class="bi bi-bootstrap me-1"></i>
+                                بوت‌استرپ
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- پست‌های محبوب -->
+            <div class="card fade-up" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); border-radius: 20px; backdrop-filter: blur(10px); animation-delay: 0.15s;">
+                <div class="card-header border-0" style="background: transparent; padding: 20px 24px 0;">
+                    <h5 class="fw-bold" style="color: white; font-size: 18px;">
+                        <i class="bi bi-fire text-danger me-2"></i>
+                        پست‌های محبوب
+                    </h5>
+                </div>
+                <div class="card-body p-4">
+                    <div class="popular-post d-flex align-items-center gap-3 mb-3 pb-3" style="border-bottom: 1px solid rgba(255,255,255,0.05); transition: 0.3s;">
+                        <div class="flex-shrink-0" style="width: 60px; height: 60px; background: linear-gradient(135deg, #4f46e5, #06b6d4); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 20px; color: white;">
+                            <i class="bi bi-file-text"></i>
+                        </div>
+                        <div>
+                            <a href="#" class="text-decoration-none d-block fw-semibold" style="color: #e5e7eb; font-size: 14px; transition: 0.3s;">
+                                آموزش جامع جنگو
+                            </a>
+                            <span style="color: #6b7280; font-size: 12px;">
+                                <i class="bi bi-eye me-1"></i> ۲٫۵K بازدید
+                            </span>
+                        </div>
+                    </div>
+                    <div class="popular-post d-flex align-items-center gap-3" style="transition: 0.3s;">
+                        <div class="flex-shrink-0" style="width: 60px; height: 60px; background: linear-gradient(135deg, #f59e0b, #f97316); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 20px; color: white;">
+                            <i class="bi bi-palette"></i>
+                        </div>
+                        <div>
+                            <a href="#" class="text-decoration-none d-block fw-semibold" style="color: #e5e7eb; font-size: 14px; transition: 0.3s;">
+                                طراحی با Tailwind
+                            </a>
+                            <span style="color: #6b7280; font-size: 12px;">
+                                <i class="bi bi-eye me-1"></i> ۱٫۸K بازدید
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        /* استایل‌های اختصاصی برای صفحه نتایج جستجو */
+        .search-result-card {
+            animation: fadeUp 0.7s ease;
+            transition: transform 0.4s, box-shadow 0.4s;
+        }
+
+        .search-result-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(79, 70, 229, 0.3) !important;
+            box-shadow: 0 15px 40px -10px rgba(0,0,0,0.4);
+        }
+
+        .search-result-card .card-title a:hover {
+            color: #60a5fa !important;
+        }
+
+        .category-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+        }
+
+        .popular-post:hover {
+            transform: translateX(-5px);
+        }
+
+        .page-item .page-link:hover {
+            background: rgba(255,255,255,0.1) !important;
+            border-color: rgba(255,255,255,0.15) !important;
+            color: white !important;
+        }
+
+        /* انیمیشن fade-up */
+        .fade-up {
+            animation: fadeUp 0.7s ease forwards;
+            opacity: 0;
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* استایل برای موبایل */
+        @media (max-width: 768px) {
+            .search-result-card .row.g-0 {
+                flex-direction: column;
+            }
+            .search-result-card .col-md-4 {
+                width: 100%;
+            }
+            .search-result-card .col-md-4 img {
+                min-height: 150px;
+                max-height: 200px;
+            }
+            .search-result-card .col-md-8 {
+                width: 100%;
+            }
+            .search-query-box {
+                text-align: center;
+            }
+            .search-query-box .fw-bold {
+                display: block;
+                margin-top: 5px;
+            }
+        }
+
+        /* استایل اسکرول برای لیست مقالات */
+        .articles-list {
+            max-height: 800px;
+            overflow-y: auto;
+            padding-right: 5px;
+        }
+
+        .articles-list::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .articles-list::-webkit-scrollbar-track {
+            background: rgba(255,255,255,0.03);
+            border-radius: 10px;
+        }
+
+        .articles-list::-webkit-scrollbar-thumb {
+            background: rgba(79, 70, 229, 0.3);
+            border-radius: 10px;
+        }
+
+        .articles-list::-webkit-scrollbar-thumb:hover {
+            background: rgba(79, 70, 229, 0.5);
+        }
+
+        /* استایل برای برچسب‌های پیشنهادی */
+        .badge-suggestion {
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .badge-suggestion:hover {
+            background: rgba(255,255,255,0.1) !important;
+            color: white !important;
+            transform: translateY(-2px);
+        }
+    </style>
+
+    <!-- جاوااسکریپت -->
+    <script>
+        // کلیک روی برچسب‌های پیشنهادی
+        document.querySelectorAll('.badge-suggestion').forEach(badge => {
+            badge.addEventListener('click', function() {
+                const query = this.textContent.trim();
+                window.location.href = "#?q=" + encodeURIComponent(query);
+            });
+        });
+
+        // انیمیشن تاخیر برای آیتم‌ها
+        document.querySelectorAll('.fade-up').forEach((el, index) => {
+            if (!el.style.animationDelay) {
+                el.style.animationDelay = (index * 0.05) + 's';
+            }
+        });
+
+        // هایلایت عبارت جستجو در نتایج
+        document.addEventListener('DOMContentLoaded', function() {
+            const query = "{{ query }}";
+            if (query) {
+                document.querySelectorAll('.search-result-card .card-text').forEach(p => {
+                    const text = p.innerHTML;
+                    const regex = new RegExp(query, 'gi');
+                    if (text.match(regex)) {
+                        p.innerHTML = text.replace(regex, match =>
+                            `<span style="background: rgba(79, 70, 229, 0.3); color: #60a5fa; padding: 2px 6px; border-radius: 4px;">${match}</span>`
+                        );
+                    }
+                });
+            }
+        });
+    </script>
+    {% endblock %}

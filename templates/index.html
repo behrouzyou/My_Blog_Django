@@ -31,7 +31,7 @@
         class="text-decoration-none"
         style="color: #60a5fa; font-size: 14px; transition: 0.3s"
       >
-        مشاهده همه <i class="bi bi-arrow-left"></i>
+       
       </a>
     </div>
 
@@ -353,28 +353,17 @@
         </h5>
       </div>
       <div class="card-body p-4">
-        <div class="input-group" style="border-radius: 30px; overflow: hidden">
-          <input
-            type="text"
-            class="form-control"
-            placeholder="جستجو برای..."
-            style="
-              background: rgba(255, 255, 255, 0.05);
-              border: 1px solid rgba(255, 255, 255, 0.08);
-              color: white;
-              padding: 12px 20px;
-              border-radius: 30px 0 0 30px;
-              transition: 0.3s;
-            "
-          />
-          <button
-            class="btn btn-gradient"
-            type="button"
-            style="border-radius: 0 30px 30px 0; padding: 12px 25px"
-          >
-            <i class="bi bi-search"></i>
-          </button>
-        </div>
+        <form class="d-flex me-3" method="get" action="{% url 'search' %}">
+                <input class="form-control search-box"
+                       type="search"
+                       name="q"
+                       placeholder="جستجو...">
+
+                <button class="btn btn-primary ms-2">
+                    <i class="bi bi-search"></i>
+                </button>
+
+            </form>
       </div>
     </div>
 

@@ -1,10 +1,11 @@
-from django.shortcuts import render,redirect,
+from django.shortcuts import render,redirect
 from .models import Article,Category
 from django.views.generic import ListView,DetailView,CreateView,UpdateView,DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin,UserPassesTestMixin
 from .forms import ArticleForm,CommentForm
 from django.urls import reverse_lazy,reverse
 from django.contrib import messages
+from django.db.models import Q
 
 class ArticleListView(ListView):
     model=Article
@@ -94,6 +95,25 @@ class ArticleDeleteView(LoginRequiredMixin,DeleteView,UserPassesTestMixin):
     def test_func(self):
         article=self.get_object()
         return self.request.user==article.author
+class SearchResultView(ListView):
+    model=Article
+    template_name='search_result.html'
+    context_object_name='articles'
+    paginate_by=2
+
+    def get_queryset(self):
+        query = self.request.GET.get('q')
+        if query:
+            return Article.published.filter(
+                Q(title__icontains=query) | Q(content__icontains=query)
+            ).distinct()
+        return Article.published.none()
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["query"] =self.request.GET.get('q')
+        return context
+
 
 # def article_form(request):
 #     return render(request,'article_form.html')

@@ -32,9 +32,9 @@
 
     <div class="container">
 
-        <a class="navbar-brand fw-bold" href="#">
-            <i class="bi bi-journal-richtext"></i>
-            Blog
+        <a class="navbar-brand fw-bold" href="{% url 'home' %}">
+            <i class="bi bi-journal-richtext"> بلاگ</i>
+
         </a>
 
         <button class="navbar-toggler text-white"
@@ -48,16 +48,16 @@
             <ul class="navbar-nav me-auto">
 
                 <li class="nav-item">
-                    <a class="nav-link" href="#">خانه</a>
+                    <a class="nav-link" href="{% url 'home' %}">خانه</a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="#">درباره</a>
+                    <a class="nav-link" href="{% url 'personal' %}">درباره</a>
                 </li>
 
             </ul>
 
-            <form class="d-flex me-3" method="get" >
+            <form class="d-flex me-3" method="get" action="{% url 'search' %}">
                 <input class="form-control search-box"
                        type="search"
                        name="q"
