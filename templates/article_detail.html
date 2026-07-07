@@ -160,6 +160,7 @@
                         {% if user.is_authenticated %}
                             <form method="post" class="mb-4">
                                 {% csrf_token %}
+                                {{ comment_form.as_p }}
                                 <div class="mb-3">
                                     <label for="comment" class="form-label text-white-50" style="font-size: 14px;">
                                         <i class="bi bi-pencil me-1"></i> نظر خود را بنویسید
@@ -176,31 +177,33 @@
                             <div class="alert" style="background: rgba(79, 70, 229, 0.1); border: 1px solid rgba(79, 70, 229, 0.2); border-radius: 12px; color: #818cf8;">
                                 <i class="bi bi-info-circle me-2"></i>
                                 برای ارسال نظر، لطفا
-                                <a href="#" class="fw-bold text-decoration-none" style="color: #60a5fa;">وارد شوید</a>
+                                <a href="{% url 'account_login' %}?next{{request.path}}" class="fw-bold text-decoration-none" style="color: #60a5fa;">وارد شوید</a>
                             </div>
                         {% endif %}
 
                         <!-- لیست نظرات -->
                         <div class="comments-list">
                             <!-- نظر اول -->
-                            <div class="d-flex gap-3 mb-4 p-3" style="background: rgba(255,255,255,0.02); border-radius: 12px; transition: 0.3s;">
+
+                            {% for comment in comments %}
+                                                            <div class="d-flex gap-3 mb-4 p-3" style="background: rgba(255,255,255,0.02); border-radius: 12px; transition: 0.3s;">
                                 <div class="flex-shrink-0">
                                     <div class="avatar-sm" style="width: 45px; height: 45px; background: linear-gradient(135deg, #f59e0b, #f97316); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; color: white; font-size: 16px;">
-                                        M
+                                        {{comment.author.usename}}
                                     </div>
                                 </div>
                                 <div class="flex-grow-1">
                                     <div class="d-flex flex-wrap align-items-center gap-2 mb-1">
-                                        <span class="fw-bold" style="color: #e5e7eb;">مریم احمدی</span>
+                                        <span class="fw-bold" style="color: #e5e7eb;">{{comment.author.username}}</span>
                                         <span class="text-secondary" style="font-size: 12px;">
-                                            <i class="bi bi-calendar3 me-1"></i> ۱۴ تیر ۱۴۰۵ - ۱۵:۳۰
+                                            <i class="bi bi-calendar3 me-1"></i> {{comment.created_at|date:"Y/m/d"}}
                                         </span>
                                         <span class="badge" style="background: rgba(79, 70, 229, 0.2); color: #818cf8; font-size: 10px; border-radius: 30px;">
-                                            نویسنده
+                                            {{comment.author.username}}
                                         </span>
                                     </div>
                                     <p style="color: #9ca3af; margin-bottom: 8px; font-size: 14px; line-height: 1.7;">
-                                        مقاله بسیار عالی بود! خیلی کمکم کرد تا با جنگو آشنا شم. ممنون از شما.
+                                      {{comment.body|linebreaks}}
                                     </p>
                                     <div class="d-flex gap-3" style="font-size: 13px;">
                                         <a href="#" class="text-decoration-none" style="color: #6b7280; transition: 0.3s;">
@@ -212,34 +215,13 @@
                                     </div>
                                 </div>
                             </div>
-
-                            <!-- نظر دوم -->
-                            <div class="d-flex gap-3 mb-4 p-3" style="background: rgba(255,255,255,0.02); border-radius: 12px; transition: 0.3s;">
-                                <div class="flex-shrink-0">
-                                    <div class="avatar-sm" style="width: 45px; height: 45px; background: linear-gradient(135deg, #4f46e5, #06b6d4); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; color: white; font-size: 16px;">
-                                        A
-                                    </div>
-                                </div>
-                                <div class="flex-grow-1">
-                                    <div class="d-flex flex-wrap align-items-center gap-2 mb-1">
-                                        <span class="fw-bold" style="color: #e5e7eb;">علی رضایی</span>
-                                        <span class="text-secondary" style="font-size: 12px;">
-                                            <i class="bi bi-calendar3 me-1"></i> ۱۳ تیر ۱۴۰۵ - ۲۲:۱۵
-                                        </span>
-                                    </div>
-                                    <p style="color: #9ca3af; margin-bottom: 8px; font-size: 14px; line-height: 1.7;">
-                                        آیا امکانش هست که یک مقاله درباره ORM جنگو هم بنویسید؟ ممنون میشم.
+                            {% empty %}
+                            <p style="color: #9ca3af; margin-bottom: 8px; font-size: 14px; line-height: 1.7;">
+                                      نظری ثبت نشده است
                                     </p>
-                                    <div class="d-flex gap-3" style="font-size: 13px;">
-                                        <a href="#" class="text-decoration-none" style="color: #6b7280; transition: 0.3s;">
-                                            <i class="bi bi-heart me-1"></i> ۸
-                                        </a>
-                                        <a href="#" class="text-decoration-none" style="color: #6b7280; transition: 0.3s;">
-                                            <i class="bi bi-reply me-1"></i> پاسخ
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
+                            {% endfor %}
+
+
 
                             <!-- دکمه مشاهده بیشتر -->
                             <div class="text-center mt-3">

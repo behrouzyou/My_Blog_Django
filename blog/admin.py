@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Article,Category
+from .models import Article,Category,Comment
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
@@ -26,3 +26,14 @@ class ArticleAdmin(admin.ModelAdmin):
     tag_list.short_description='برچسب ها'
 
     list_display=list(list_display) + ['tag_list']
+
+@admin.register(Comment)
+class CommentAdmin(admin.ModelAdmin):
+    list_display = ('author', 'body', 'article', 'created_at', 'active')
+    list_filter = ('active', 'created_at')
+    search_fields = ('author__username', 'body')
+    actions = ['approve_comments']
+    def approve_comments(self, request, queryset):
+        queryset.update(active=True)
+        # self.approve_comments.short_description = "تایید نظرات انتخاب شده"
+        self.message_user(request,"تایید نظرات انتخاب شده")

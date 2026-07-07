@@ -77,3 +77,4 @@ class Comment(models.Model):
 
     def __str__(self):
         return f'نظر توسط{self.author}برای{self.article}'
+

@@ -112,8 +112,9 @@
               >{{ article.author.username }}</a
             >
             <span style="color: #6b7280; font-size: 13px; margin-right: 10px">
-              <i class="bi bi-calendar3 me-1"></i> {{
-              article.created_at|date:'Y/m/d' }}
+              <i class="bi bi-calendar3 me-1">
+                {{article.created_at|date:'Y/m/d'}}
+              </i>
             </span>
           </div>
         </div>

@@ -1,5 +1,5 @@
 from django import forms
-from .models import Article
+from .models import Article,Comment
 
 class ArticleForm(forms.ModelForm):
     class Meta:
@@ -13,4 +13,16 @@ class ArticleForm(forms.ModelForm):
             'image':forms.ClearableFileInput(attrs={'class':'form-control'}),
             'tags':forms.TextInput(attrs={'class':'form-control','placeholder':'برچسب را با کاما جدا کنید'}),
             'status':forms.Select(attrs={'class':'form-control'}),
+        }
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model=Comment
+        fields=('body',)
+
+        widgets={
+            'body':forms.Textarea(attrs={'class':'form-control','row':4,'placeholder':'نظر خود را بنویسید'})
+
+        }
+        label={
+            'body':''
         }
