@@ -30,9 +30,9 @@ class ArticleDetailView(DetailView):
 # def article_detail(request):
 #     return render(request,'article_detail.html')
 def login(request):
-    return render(request,'login.html')
+    return render(request,'accounts/login.html')
 def signup(request):
-    return render(request,'signup.html')
+    return render(request,'accounts/signup.html')
 def profile(request):
     return render(request,'profile.html')
 

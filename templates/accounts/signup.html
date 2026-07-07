@@ -26,8 +26,9 @@
 
                 <!-- بدنه فرم -->
                 <div class="card-body p-4 pt-3">
-                    <form class="signup" id="signup_form" method="post" action="#">
+                    <form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}">
                         {% csrf_token %}
+                        {{form.as_p}}
 
                         <!-- فیلد نام کاربری -->
                         <div class="mb-3">
